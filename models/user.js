@@ -1,29 +1,29 @@
-const { Schema, model } = require('mongoose');
-const { handleMongooseError } = require('../utils');
-const Joi = require('joi');
+const { Schema, model } = require("mongoose")
+const { handleMongooseError } = require("../utils")
+const Joi = require("joi")
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
 const userSchema = new Schema(
   {
-    password: {
+    name: {
       type: String,
-      required: [true, 'Set password for user'],
+      required: true,
     },
     email: {
       type: String,
       match: emailRegex,
-      required: [true, 'Email is required'],
+      required: [true, "Email is required"],
       unique: true,
     },
-    subscription: {
+    password: {
       type: String,
-      enum: ['starter', 'pro', 'business'],
-      default: 'starter',
+      minlegth: 6,
+      required: [true, "Set password for user"],
     },
     token: {
       type: String,
-      default: '',
+      default: "",
     },
     avatarURL: {
       type: String,
@@ -35,37 +35,38 @@ const userSchema = new Schema(
     },
     verificationCode: {
       type: String,
-      default: '',
+      default: "",
     },
   },
-  { versionKey: false, timestamps: true },
-);
+  { versionKey: false, timestamps: true }
+)
 
-userSchema.post('save', handleMongooseError);
+userSchema.post("save", handleMongooseError)
 
 const userRegistrSchema = Joi.object({
-  password: Joi.string().required(),
+  name: Joi.string().required(),
   email: Joi.string().pattern(emailRegex).required(),
-});
+  password: Joi.string().min(6).required(),
+})
 
 const userEmailSchema = Joi.object({
   email: Joi.string().pattern(emailRegex).required(),
-});
+})
 
 const userLoginSchema = Joi.object({
-  password: Joi.string().required(),
   email: Joi.string().pattern(emailRegex).required(),
-});
+  password: Joi.string().required(),
+})
 
 const schemas = {
   userRegistrSchema,
   userEmailSchema,
   userLoginSchema,
-};
+}
 
-const User = model('user', userSchema);
+const User = model("user", userSchema)
 
 module.exports = {
   User,
   schemas,
-};
+}

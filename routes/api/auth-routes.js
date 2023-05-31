@@ -1,6 +1,8 @@
 const express = require("express")
+const recipeControllers = require("../../controllers/recipe-controller")
 const router = express.Router()
 
+router.get("/", recipeControllers.getAllRecipe)
 router.post("/subscribe")
 router.get("/recipes/category-list")
 router.get("/recipes/main-page")
