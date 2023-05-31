@@ -16,6 +16,7 @@ router.post(
 //   validateBody(schemas.userEmailSchema),
 //   authControllers.resendVerifyEmail
 // )
+// parol
 router.post(
   "/login",
   validateBody(schemas.userLoginSchema),
