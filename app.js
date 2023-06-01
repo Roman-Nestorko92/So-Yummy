@@ -3,6 +3,7 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 const authRoutes = require("./src/routes/api/auth-routes");
+const categoryListRoutes = require("./src/routes/api/categoryList-routes");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.json("public"));
 
 app.use("/api/auth", authRoutes);
+app.use("/api", categoryListRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
