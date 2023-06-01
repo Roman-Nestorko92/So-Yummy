@@ -9,8 +9,8 @@ const apiInfo = {
       url: "https://opensource.org/licenses/MIT",
     },
   },
-  consumes: ["application/json"],
-  produces: ["application/json"],
+  consumes: ["application/json", "multipart/form-data"],
+  produces: ["application/json", "multipart/form-data"],
   servers: [
     { url: "http://localhost:3001" },
     { url: "https://so-yummy-mg49.onrender.com" },

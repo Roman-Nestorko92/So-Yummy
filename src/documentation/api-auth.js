@@ -38,7 +38,7 @@ const authPath = {
         },
       },
     },
-    "api/auth/login": {
+    "/api/auth/login": {
       post: {
         tags: ["Auth"],
         summary: "User login",
@@ -75,7 +75,7 @@ const authPath = {
         },
       },
     },
-    "api/auth/current": {
+    "/api/auth/current": {
       get: {
         tags: ["Auth"],
         summary: "Get current user info",
@@ -83,7 +83,6 @@ const authPath = {
         security: [{ Bearer: [] }],
         responses: {
           200: {
-            description: "User is logged in",
             content: {
               "application/json": {
                 schema: {
@@ -99,7 +98,7 @@ const authPath = {
         },
       },
     },
-    "api/auth/logout": {
+    "/api/auth/logout": {
       post: {
         tags: ["Auth"],
         summary: "Logout user",
@@ -116,40 +115,44 @@ const authPath = {
         },
       },
     },
-    // "api/auth/avatars": {
-    //   patch: {
-    //     tags: ["Auth"],
-    //     summary: "Update of user's avatar",
-    //     parameters: [],
-    //     security: [{ Bearer: [] }],
-    //     requestBody: {
-    //       description: "Login object",
-    //       required: true,
-    //       content: {
-    //         "application/json": {
-    //           schema: {
-    //             $ref: "#/components/schemas/UpdateAvatarRequest",
-    //           },
-    //         },
-    //       },
-    //     },
-    //     responses: {
-    //       200: {
-    //         description: "User is logged in",
-    //         content: {
-    //           "application/json": {
-    //             schema: {
-    //               $ref: "#/components/schemas/UpdateAvatarRequest",
-    //             },
-    //           },
-    //         },
-    //       },
-    //       401: { description: "Unauthorized" },
+    "/api/auth/edit": {
+      patch: {
+        tags: ["Auth"],
+        summary: "Update of user's data",
+        parameters: [],
+        security: [{ Bearer: [] }],
+        requestBody: {
+          description: "Object with image and name",
+          required: true,
+          content: {
+            "multipart/form-data:": {
+              schema: {
+                $ref: "#/components/schemas/UpdateUserDataRequest",
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Data updated",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/UpdateUserDataRequest",
+                },
+              },
+            },
+          },
+          400: {
+            description:
+              "Provide all necessary fields / File format not allowed  ",
+          },
+          401: { description: "Unauthorized" },
 
-    //       500: { description: "Server error" },
-    //     },
-    //   },
-    // },
+          500: { description: "Server error" },
+        },
+      },
+    },
   },
 };
 module.exports = authPath;
