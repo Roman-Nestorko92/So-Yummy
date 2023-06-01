@@ -4,10 +4,11 @@ const cors = require("cors");
 require("dotenv").config();
 const authRoutes = require("./src/routes/api/auth-routes");
 
+const recipeRoutes = require("./src/routes/api/recipe-routes");
+
 const categoryListRoutes = require("./src/routes/api/categoryList-routes");
 
 const docRoutes = require("./src/routes/api/api-docs-routes");
-
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(express.json("public"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api", categoryListRoutes);
-
+app.use("/api/recipes", recipeRoutes);
 // DOCUMENTATION
 
 app.use("/api", docRoutes);
