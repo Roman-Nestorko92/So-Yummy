@@ -10,12 +10,7 @@ router.post(
   validateBody(schemas.userRegistrSchema),
   authControllers.register
 )
-// router.get("/verify/:verificationCode", authControllers.verify)
-// router.get(
-//   "/verify",
-//   validateBody(schemas.userEmailSchema),
-//   authControllers.resendVerifyEmail
-// )
+
 router.post(
   "/login",
   validateBody(schemas.userLoginSchema),
@@ -24,9 +19,10 @@ router.post(
 router.get("/current", authentificate, authControllers.getCurrent)
 router.post("/logout", authentificate, authControllers.logout)
 router.patch(
-  "/avatars",
+  "/edit",
   authentificate,
   upload.single("avatar"),
-  authControllers.updateAvatar
+  validateBody(schemas.userUpdateSchema),
+  authControllers.updateUser
 )
 module.exports = router

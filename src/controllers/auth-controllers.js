@@ -7,7 +7,6 @@ const gravatar = require("gravatar")
 const path = require("path")
 const fs = require("fs/promises")
 const { SECRET_KEY } = process.env
-// const { nanoid } = require("nanoid")
 
 const register = async (req, res) => {
   const { email, password } = req.body
@@ -18,70 +17,35 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10)
   const avatarURL = gravatar.url(email)
-  //   const verificationCode = nanoid()
-  const result = await User.create({
+
+  await User.create({
     ...req.body,
     password: hashPassword,
     avatarURL,
-    // verificationCode,
   })
 
-  //   const verifyEmail = {
-  //     to: email,
-  //     subject: "Verify email",
-  //     html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click verify email</a>`,
-  //   }
+  const currentUser = await User.findOne({ email })
+  const { _id: id } = currentUser
+  const payload = {
+    id: currentUser._id,
+  }
 
-  //   await sendEmail(verifyEmail)
-
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" })
+  await User.findByIdAndUpdate(id, { token })
   res.status(201).json({
-    email: result.email,
-    subscription: result.subscription,
-    password: result.password,
+    token,
+    user: {
+      name: currentUser.name,
+      email: currentUser.email,
+      avatarURL: currentUser.avatarURL,
+    },
   })
 }
-
-// const verify = async (req, res) => {
-//   const { verificationCode } = req.params
-//   const user = await User.findOne({ verificationCode })
-//   if (!user) {
-//     throw HttpError(404)
-//   }
-//   await User.findByIdAndUpdate(user._id, { verify: true, verificationCode: "" })
-
-//   res.json({
-//     message: "Verify success",
-//   })
-// }
-
-// const resendVerifyEmail = async (req, res) => {
-//   const { email } = req.body
-//   const user = await User.findOne({ email })
-//   if (!user) {
-//     throw HttpError(404)
-//   }
-
-//   if (user.verify) {
-//     throw HttpError(400, "Email already verify")
-//   }
-
-//   const verifyEmail = {
-//     to: email,
-//     subject: "Verify email",
-//     html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${user.verificationCode}">Click verify email</a>`,
-//   }
-
-//   await sendEmail(verifyEmail)
-
-//   res.json({
-//     message: "Verify email resend",
-//   })
-// }
 
 const login = async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
-  if (!user || !user.verify) {
+  if (!user) {
     throw new HttpError(401)
   }
 
@@ -102,7 +66,8 @@ const login = async (req, res) => {
     token,
     user: {
       email: user.email,
-      subscription: user.subscription,
+      email: user.email,
+      avatarURL: user.avatarURL,
     },
   })
 }
@@ -114,6 +79,7 @@ const getCurrent = async (req, res) => {
     user: {
       name,
       email,
+      avatarURL,
     },
   })
 }
@@ -127,26 +93,43 @@ const logout = async (req, res) => {
   })
 }
 
-const avatarsDir = path.resolve("public", "avatars")
+const avatarsDir = path.resolve("src/public", "avatars")
 
-const updateAvatar = async (req, res) => {
+const updateUser = async (req, res) => {
   const { path: tempUpload, filename } = req.file
+  const { name } = req.body
   const resultUpload = path.join(avatarsDir, filename)
-  await fs.rename(tempUpload, resultUpload)
-  const avatarURL = path.join("avatars", filename)
-  await User.findByIdAndUpdate(req.user._id, { avatarURL })
+  if (!name && !req.file) {
+    throw new HttpError(400, "Provide all necessary fields")
+  }
+
+  if (name) {
+    req.user.name = name
+  }
+
+  if (req.file) {
+    await fs.rename(tempUpload, resultUpload)
+    const avatarURL = path.join("avatars", filename)
+    req.user.avatarURL = avatarURL
+    console.log(req.user.avatarURL)
+  }
+
+  const data = {
+    name: req.user.name,
+    avatarURL: req.user.avatarURL,
+  }
+
+  await User.findByIdAndUpdate(req.user._id, data)
 
   res.json({
-    avatarURL,
+    data,
   })
 }
 
 module.exports = {
   register: ctrlWrapper(register),
-  // verify: ctrlWrapper(verify),
-  // resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
-  updateAvatar: ctrlWrapper(updateAvatar),
+  updateUser: ctrlWrapper(updateUser),
 }
