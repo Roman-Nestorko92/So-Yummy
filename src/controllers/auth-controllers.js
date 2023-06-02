@@ -97,7 +97,6 @@ const avatarsDir = path.resolve("src/public", "avatars");
 
 const updateUser = async (req, res) => {
   const { name } = req.body;
-  console.log(req.body);
   if (!name && !req.file) {
     throw HttpError(400, "Provide all necessary fields");
   }

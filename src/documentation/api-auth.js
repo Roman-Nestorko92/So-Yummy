@@ -149,44 +149,6 @@ const authPath = {
         },
       },
     },
-    "/api/recipes/category-list": {
-      get: {
-        tags: ["Auth"],
-        summary: "Update of user's data",
-        parameters: [],
-        security: [{ Bearer: [] }],
-        requestBody: {
-          description: "Object with image and name",
-          required: true,
-          content: {
-            "multipart/form-data:": {
-              schema: {
-                $ref: "#/components/schemas/UpdateUserDataRequest",
-              },
-            },
-          },
-        },
-        responses: {
-          200: {
-            description: "Data updated",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/UpdateUserDataRequest",
-                },
-              },
-            },
-          },
-          400: {
-            description:
-              "Provide all necessary fields / File format not allowed  ",
-          },
-          401: { description: "Unauthorized" },
-
-          500: { description: "Server error" },
-        },
-      },
-    },
     "/api/subscribe": {
       post: {
         tags: ["Subscribe"],
@@ -240,6 +202,29 @@ const authPath = {
           404: {
             description: "This user is not subsribed",
           },
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/api/recipes/category-list": {
+      get: {
+        tags: ["Category List"],
+        summary: "List of available categories",
+        parameters: [],
+        security: [{ Bearer: [] }],
+        responses: {
+          200: {
+            description: "Success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/CategoryListResponse",
+                },
+              },
+            },
+          },
+          401: { description: "Unauthorized" },
+
           500: { description: "Server error" },
         },
       },
