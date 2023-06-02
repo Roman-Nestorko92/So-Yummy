@@ -29,6 +29,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    subscription: {
+      type: Boolean,
+      default: false,
+    },
   },
   { versionKey: false, timestamps: true }
 );

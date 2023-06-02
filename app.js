@@ -9,6 +9,7 @@ const recipeRoutes = require("./src/routes/api/recipe-routes");
 const categoryListRoutes = require("./src/routes/api/categoryList-routes");
 
 const docRoutes = require("./src/routes/api/api-docs-routes");
+const subsRoutes = require("./src/routes/api/subscription-routes");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/recipes", recipeRoutes);
 app.use("/api", docRoutes);
 
 app.use("/api/auth", authRoutes);
+app.use("/api", subsRoutes);
 
 
 app.use((req, res) => {
