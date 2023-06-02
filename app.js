@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 const authRoutes = require("./src/routes/api/auth-routes");
 const docRoutes = require("./src/routes/api/api-docs-routes");
+const subsRoutes = require("./src/routes/api/subscription-routes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.json("public"));
 app.use("/api", docRoutes);
 
 app.use("/api/auth", authRoutes);
+app.use("/api", subsRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
