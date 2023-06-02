@@ -27,7 +27,7 @@ const subscription = async (req, res) => {
   // await User.findByIdAndUpdate(subscriberId, { subscription: true });
 
   const subscribtionEmail = {
-    to: "coteb15409@ratedane.com",
+    to: email,
     subject: "Newsletter subscription",
     html: createMessage(subscriberName, _id),
   };
