@@ -1,6 +1,7 @@
 const { ctrlWrapper } = require("../utils")
 const Ingredient = require("../models/ingridient")
 const Recipe = require("../models/recipe")
+const ObjectId = require("mongodb").ObjectId
 
 const getIngredientList = async (req, res) => {
   const result = await Ingredient.aggregate([
@@ -17,53 +18,19 @@ const getIngredientList = async (req, res) => {
 
 const getIngredientSearch = async (req, res) => {
   const { ingredientsId } = req.params
-  const result = await Recipe.find(
-    {},
+
+  const result = await Recipe.aggregate([
     {
-      ingredients: {
-        $elemMatch: {
-          id: ingredientsId,
+      $match: {
+        ingredients: {
+          $elemMatch: {
+            id: new ObjectId(ingredientsId),
+          },
         },
       },
-    }
-  )
-  //   const result = await Recipe.aggregate([
-  // {
-  //   $match: {
-  //     ingredients: ingredientsId,
-  //   },
-  // },
+    },
+  ])
 
-  // {
-  //   $match: {
-  //     ingredients: {
-  //       $elemMatch: {
-  //         id: ingredientsId,
-  //       },
-  //     },
-  //   },
-  // },
-
-  //aggregate.match({ department: { $in: [ "sales", "engineering" ] } });
-  //   {
-  //     $lookup: {
-  //       from: "recipes",
-  //       localField: "_id",
-  //       foreignField: "_id",
-  //       as: "recipes",
-  //     },
-  //   },
-  //   {
-  //     points: {
-  //       $map: {
-  //         input: "$recipes",
-  //         as: "obj",
-  //         in: "$$obj.ingridients",
-  //       },
-  //     },
-  //   },
-  //   ])
-  console.log(result)
   res.status(200).json(result)
 }
 
