@@ -2,7 +2,9 @@ const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../utils");
 const Joi = require("joi");
 
+const nameRegex = /^[a-zA-Z0-9А-яЁёІіЇї\d]{1,16}$/;
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,16}$/; // one  letter, one digit, min 6 max 16
 
 const userSchema = new Schema(
   {
@@ -18,7 +20,9 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      match: passwordRegex,
       minlegth: 6,
+      maxlength: 16,
       required: [true, "Set password for user"],
     },
     token: {
@@ -36,13 +40,27 @@ const userSchema = new Schema(
 userSchema.post("save", handleMongooseError);
 
 const userRegistrSchema = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string().regex(nameRegex).min(1).max(16).required().messages({
+    "string.pattern.base": "Name limit: 16 letters",
+  }),
   email: Joi.string().pattern(emailRegex).required(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string()
+    .min(6)
+    .max(16)
+    .regex(passwordRegex)
+    .required()
+    .messages({
+      "string.min": "Must have at least 6 characters",
+      "object.regex": "Must have at least 6 characters, 1 letter and 1 digit",
+      "string.pattern.base":
+        "Password must have at least 6 characters, 1 letter and 1 digit",
+    }),
 });
 
 const userEmailSchema = Joi.object({
-  email: Joi.string().pattern(emailRegex).required(),
+  email: Joi.string().regex(emailRegex).required().messages({
+    "string.pattern.base": "Email must be valid",
+  }),
 });
 
 const userLoginSchema = Joi.object({
@@ -51,7 +69,7 @@ const userLoginSchema = Joi.object({
 });
 
 const userUpdateSchema = Joi.object({
-  name: Joi.string(),
+  name: Joi.string().regex(nameRegex).min(1).max(16),
   avatarURL: Joi.any(),
 });
 

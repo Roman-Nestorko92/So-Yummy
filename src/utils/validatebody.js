@@ -1,7 +1,9 @@
-const { HttpError } = require('../helpers');
+const { HttpError } = require("../helpers");
 
-const validateBody = schema => {
+const validateBody = (schema) => {
   const func = (req, res, next) => {
+    console.log(req.file);
+    console.log("req.body in validateBody", req.body);
     const { error } = schema.validate(req.body);
     if (error) {
       next(HttpError(400, error.message));

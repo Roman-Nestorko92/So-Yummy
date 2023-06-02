@@ -125,6 +125,40 @@ const authPath = {
           description: "Object with image and name",
           required: true,
           content: {
+            "multipart/form-data": {
+              schema: {
+                $ref: "#/components/schemas/UpdateUserDataRequest",
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Data updated",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/UpdateUserDataResponse",
+                },
+              },
+            },
+          },
+          401: { description: "Unauthorized" },
+
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/api/recipes/category-list": {
+      get: {
+        tags: ["Auth"],
+        summary: "Update of user's data",
+        parameters: [],
+        security: [{ Bearer: [] }],
+        requestBody: {
+          description: "Object with image and name",
+          required: true,
+          content: {
             "multipart/form-data:": {
               schema: {
                 $ref: "#/components/schemas/UpdateUserDataRequest",
