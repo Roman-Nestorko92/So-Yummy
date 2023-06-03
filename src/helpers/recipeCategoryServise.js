@@ -5,7 +5,6 @@ const piplineRecipe = (categoryLimit, recipeLimit, category) => {
     {
       $lookup: {
         from: "recipes",
-        // pipeline: [...calculatePopularityOfRecipes()],
         localField: "category",
         foreignField: "category",
         as: "recipes",
@@ -18,7 +17,7 @@ const piplineRecipe = (categoryLimit, recipeLimit, category) => {
             $map: {
               input: "$recipes",
               as: "obj",
-              in: "$$obj.popularity",
+              in: { $size: "$$obj.favorites" },
             },
           },
         },
@@ -94,14 +93,6 @@ const recipeCategoryServise = async ({
   category,
 }) =>
   await Category.aggregate([
-    {
-      $lookup: {
-        from: "recipes",
-        localField: "category",
-        foreignField: "category",
-        as: "recipes",
-      },
-    },
     ...piplineRecipe(categoryLimit, recipeLimit, category),
   ]);
 
