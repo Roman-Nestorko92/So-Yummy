@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const categoryControllers = require("../../controllers/category-controllers");
 const { authentificate } = require("../../middleWares");
+const popularRecipeControllers = require("../../controllers/popularrecipe-controllers");
 
 router.get(
-  "/recipes/category-list",
+  "/popular-recipe",
   authentificate,
-  categoryControllers.getListCategory
+  popularRecipeControllers.getPopularRecipes
 );
 
 module.exports = router;

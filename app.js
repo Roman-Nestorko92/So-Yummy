@@ -6,7 +6,7 @@ const authRoutes = require("./src/routes/api/auth-routes");
 
 const recipeRoutes = require("./src/routes/api/recipe-routes");
 
-const categoryListRoutes = require("./src/routes/api/categoryList-routes");
+const popularRecipeRoutes = require("./src/routes/api/popularRecipe-routes");
 
 const docRoutes = require("./src/routes/api/api-docs-routes");
 
@@ -19,16 +19,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.json("public"));
 
-
 app.use("/api/auth", authRoutes);
-app.use("/api", categoryListRoutes);
+app.use("/api", popularRecipeRoutes);
 app.use("/api/recipes", recipeRoutes);
 // DOCUMENTATION
 
 app.use("/api", docRoutes);
 
 app.use("/api/auth", authRoutes);
-
 
 app.use((req, res) => {
   res.status(404).json({
