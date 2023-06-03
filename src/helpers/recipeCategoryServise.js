@@ -97,7 +97,6 @@ const recipeCategoryServise = async ({
     {
       $lookup: {
         from: "recipes",
-        // pipeline: [...calculatePopularityOfRecipes()],
         localField: "category",
         foreignField: "category",
         as: "recipes",

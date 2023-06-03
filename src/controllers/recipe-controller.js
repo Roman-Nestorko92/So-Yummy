@@ -3,7 +3,7 @@ const recipeCategoryServise = require("../helpers/recipeCategoryServise");
 const { ctrlWrapper } = require("../utils");
 
 const getMainPageRecipe = async (req, res) => {
-  const { categoryLimit = 14, recipeLimit = 4 } = req.query;
+  const { categoryLimit = 4, recipeLimit = 4 } = req.query;
 
   const data = await recipeCategoryServise({ categoryLimit, recipeLimit });
 
@@ -12,7 +12,6 @@ const getMainPageRecipe = async (req, res) => {
 
 const getRecipeById = async (req, res) => {
   const { id } = req.params;
-  console.log("id", id);
 
   const data = await Recipe.findById({ _id: id });
   if (!data || data === []) {
@@ -24,7 +23,6 @@ const getRecipeById = async (req, res) => {
 const getCategoryRecipe = async (req, res) => {
   const { recipeLimit = 8 } = req.query;
   const { category = "Beef" } = req.params;
-  console.log("hello");
 
   const data = await recipeCategoryServise({
     recipeLimit,
