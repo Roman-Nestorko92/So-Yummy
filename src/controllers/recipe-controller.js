@@ -1,96 +1,39 @@
-// const Recipe = require("../models/recipe");
-const Category = require("../models/category");
-// const { HttpError } = require("../helpers");
+const Recipe = require("../models/recipe");
+const recipeCategoryServise = require("../helpers/recipeCategoryServise");
 const { ctrlWrapper } = require("../utils");
+const { HttpError } = require("../helpers");
 
 const getMainPageRecipe = async (req, res) => {
   const { categoryLimit = 4, recipeLimit = 4 } = req.query;
 
-  const mainPageServise = async ({ categoryLimit, recipeLimit }) =>
-    await Category.aggregate([
-      {
-        $lookup: {
-          from: "recipes",
-          // pipeline: [...calculatePopularityOfRecipes()],
-          localField: "category",
-          foreignField: "category",
-          // let: {
-          //   id: "$_id",
-          // },
-          as: "recipes",
-        },
-      },
-      {
-        $addFields: {
-          points: {
-            $sum: {
-              $map: {
-                input: "$recipes",
-                as: "obj",
-                in: "$$obj.popularity",
-              },
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          points: 1,
-          category: 1,
-          recipes: 1,
-        },
-      },
-      {
-        $unwind: {
-          path: "$recipes",
-        },
-      },
-      {
-        $sort: {
-          "recipes.popularity": -1,
-        },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          recipes: {
-            $push: {
-              _id: "$recipes._id",
-              title: "$recipes.title",
-              preview: "$recipes.preview",
-              thumb: "$recipes.thumb",
-            },
-          },
-          points: {
-            $first: "$points",
-          },
-          category: {
-            $first: "$category",
-          },
-        },
-      },
-      {
-        $addFields: {
-          recipes: {
-            $slice: ["$recipes", 0, Number(recipeLimit)],
-          },
-        },
-      },
-      {
-        $sort: {
-          points: -1,
-        },
-      },
-      {
-        $limit: Number(categoryLimit),
-      },
-    ]);
+  const data = await recipeCategoryServise({ categoryLimit, recipeLimit });
 
-  const data = await mainPageServise({ categoryLimit, recipeLimit });
+  res.json(data);
+};
 
+const getRecipeById = async (req, res) => {
+  const { id } = req.params;
+
+  const data = await Recipe.findById({ _id: id });
+  if (!data) {
+    throw HttpError(404, `Not found`);
+  }
+  res.json(data);
+};
+
+const getCategoryRecipe = async (req, res) => {
+  const { recipeLimit = 8 } = req.query;
+  const { category = "Beef" } = req.params;
+
+  const data = await recipeCategoryServise({
+    recipeLimit,
+    category,
+  });
   res.json(data);
 };
 
 module.exports = {
   getMainPageRecipe: ctrlWrapper(getMainPageRecipe),
+  getCategoryRecipe: ctrlWrapper(getCategoryRecipe),
+  getRecipeById: ctrlWrapper(getRecipeById),
 };
