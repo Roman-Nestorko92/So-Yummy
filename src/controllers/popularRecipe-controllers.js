@@ -17,6 +17,7 @@ const getPopularRecipes = async (req, res) => {
         preview: { $first: "$preview" },
         thumb: { $first: "$thumb" },
         instructions: { $first: "$instructions" },
+        description: { $first: "$description" },
         points: {
           $first: "$points",
         },
@@ -28,7 +29,7 @@ const getPopularRecipes = async (req, res) => {
       },
     },
   ]);
-  res.status(201).json(result);
+  res.status(200).json(result);
 };
 
 module.exports = {

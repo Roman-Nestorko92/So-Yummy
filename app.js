@@ -8,6 +8,8 @@ const recipeRoutes = require("./src/routes/api/recipe-routes");
 
 const popularRecipeRoutes = require("./src/routes/api/popularRecipe-routes");
 
+const searchRoutes = require("./src/routes/api/search-routes");
+
 const docRoutes = require("./src/routes/api/api-docs-routes");
 
 const app = express();
@@ -20,7 +22,8 @@ app.use(express.json());
 app.use(express.json("public"));
 
 app.use("/api/auth", authRoutes);
-app.use("/api", popularRecipeRoutes);
+app.use("/api/popular-recipe", popularRecipeRoutes);
+app.use("/api/search", searchRoutes);
 app.use("/api/recipes", recipeRoutes);
 // DOCUMENTATION
 
