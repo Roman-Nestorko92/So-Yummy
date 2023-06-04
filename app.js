@@ -11,6 +11,7 @@ const categoryListRoutes = require("./src/routes/api/categoryList-routes")
 const docRoutes = require("./src/routes/api/api-docs-routes")
 const subsRoutes = require("./src/routes/api/subscription-routes")
 const ingridientRoutes = require("./src/routes/api/ingredienslist-routes")
+const shoppingListRoutes = require("./src/routes/api/shopinglist-routes")
 const app = express()
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short"
@@ -24,6 +25,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api", categoryListRoutes)
 app.use("/api/recipes", recipeRoutes)
 app.use("/api", ingridientRoutes)
+app.use("/api/shopping-list", shoppingListRoutes)
 // DOCUMENTATION
 
 app.use("/api", docRoutes)

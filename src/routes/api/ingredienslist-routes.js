@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { authentificate } = require("../../middleWares")
+const { authentificate, isValidId } = require("../../middleWares")
 const ingredientListController = require("../../controllers/ingredientList-controller")
 
 router.get(
@@ -11,6 +11,7 @@ router.get(
 
 router.get(
   "/ingredients/:ingredientsId",
+  isValidId,
   authentificate,
   ingredientListController.getIngredientSearch
 )
