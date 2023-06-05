@@ -3,7 +3,7 @@ const router = express.Router();
 const authControllers = require("../../controllers/auth-controllers");
 const { schemas } = require("../../models/user");
 const { validateBody } = require("../../utils");
-const { authentificate, upload } = require("../../middleWares");
+const { authentificate, uploadAvatar } = require("../../middleWares");
 
 router.post(
   "/register",
@@ -22,7 +22,7 @@ router.post("/logout", authentificate, authControllers.logout);
 router.patch(
   "/edit",
   authentificate,
-  upload.single("avatar"),
+  uploadAvatar.single("avatar"),
   validateBody(schemas.userUpdateSchema),
   authControllers.updateUser
 );

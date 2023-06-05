@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
-const fs = require("fs/promises");
+
+const { cloudinary } = require("../utils");
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
@@ -106,11 +107,8 @@ const updateUser = async (req, res) => {
   }
 
   if (req.file) {
-    const { path: tempUpload, filename } = req.file;
-    const resultUpload = path.join(avatarsDir, filename);
-    await fs.rename(tempUpload, resultUpload);
-    const avatarURL = path.join("avatars", filename);
-    req.user.avatarURL = avatarURL;
+    const imageUrl = cloudinary.url(req.file.filename);
+    req.user.avatarURL = imageUrl;
   }
 
   const data = {

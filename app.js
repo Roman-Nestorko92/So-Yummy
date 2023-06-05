@@ -10,6 +10,7 @@ const categoryListRoutes = require("./src/routes/api/categoryList-routes");
 
 const docRoutes = require("./src/routes/api/api-docs-routes");
 const subsRoutes = require("./src/routes/api/subscription-routes");
+const ownRecipesRoutes = require("./src/routes/api/ownRecipes-routes");
 
 const app = express();
 
@@ -20,17 +21,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.json("public"));
 
-
 app.use("/api/auth", authRoutes);
 app.use("/api", categoryListRoutes);
 app.use("/api/recipes", recipeRoutes);
+app.use("/api/ownRecipes", ownRecipesRoutes);
 // DOCUMENTATION
 
 app.use("/api", docRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api", subsRoutes);
-
 
 app.use((req, res) => {
   res.status(404).json({

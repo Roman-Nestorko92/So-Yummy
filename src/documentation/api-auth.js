@@ -229,6 +229,40 @@ const authPath = {
         },
       },
     },
+    "/api/ownRecipes": {
+      post: {
+        tags: ["Own Recipes"],
+        summary: "Creating user's own recipe",
+        parameters: [],
+        security: [{ Bearer: [] }],
+        requestBody: {
+          description: "Object with info regarding recipe",
+          required: true,
+          content: {
+            "multipart/form-data": {
+              schema: {
+                $ref: "#/components/schemas/AddOwnRecipeRequest",
+              },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: "Created",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/AddOwnRecipeResponse",
+                },
+              },
+            },
+          },
+          400: { description: "Bad request / Unsupported file format" },
+          401: { description: "Unauthorized" },
+          500: { description: "Server error" },
+        },
+      },
+    },
   },
 };
 

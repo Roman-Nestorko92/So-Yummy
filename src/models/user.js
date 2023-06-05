@@ -20,9 +20,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      match: passwordRegex,
       minlegth: 6,
-      maxlength: 16,
       required: [true, "Set password for user"],
     },
     token: {
