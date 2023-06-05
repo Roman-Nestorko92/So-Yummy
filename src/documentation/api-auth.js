@@ -32,7 +32,7 @@ const authPath = {
             description: "Bad request ",
           },
           409: {
-            description: "Email already exist",
+            description: "User with such Email already exist",
           },
           500: { description: "Server error" },
         },
@@ -125,7 +125,7 @@ const authPath = {
           description: "Object with image and name",
           required: true,
           content: {
-            "multipart/form-data:": {
+            "multipart/form-data": {
               schema: {
                 $ref: "#/components/schemas/UpdateUserDataRequest",
               },
@@ -138,14 +138,10 @@ const authPath = {
             content: {
               "application/json": {
                 schema: {
-                  $ref: "#/components/schemas/UpdateUserDataRequest",
+                  $ref: "#/components/schemas/UpdateUserDataResponse",
                 },
               },
             },
-          },
-          400: {
-            description:
-              "Provide all necessary fields / File format not allowed  ",
           },
           401: { description: "Unauthorized" },
 
@@ -206,6 +202,63 @@ const authPath = {
           404: {
             description: "This user is not subsribed",
           },
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/api/recipes/category-list": {
+      get: {
+        tags: ["Category List"],
+        summary: "List of available categories",
+        parameters: [],
+        security: [{ Bearer: [] }],
+        responses: {
+          200: {
+            description: "Success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/CategoryListResponse",
+                },
+              },
+            },
+          },
+          401: { description: "Unauthorized" },
+
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/api/ownRecipes": {
+      post: {
+        tags: ["Own Recipes"],
+        summary: "Creating user's own recipe",
+        parameters: [],
+        security: [{ Bearer: [] }],
+        requestBody: {
+          description: "Object with info regarding recipe",
+          required: true,
+          content: {
+            "multipart/form-data": {
+              schema: {
+                $ref: "#/components/schemas/AddOwnRecipeRequest",
+              },
+            },
+          },
+        },
+        responses: {
+          201: {
+            description: "Created",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/AddOwnRecipeResponse",
+                },
+              },
+            },
+          },
+          400: { description: "Bad request / Unsupported file format" },
+          401: { description: "Unauthorized" },
           500: { description: "Server error" },
         },
       },

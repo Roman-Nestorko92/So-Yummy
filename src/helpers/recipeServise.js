@@ -1,5 +1,6 @@
 const Recipe = require("../models/recipe");
 const ObjectId = require("mongodb").ObjectId;
+const { OwnRecipe } = require("../models/ownRecipe");
 
 const piplineOneRecipe = (id) => {
   const pipeline = [
@@ -49,4 +50,10 @@ const piplineOneRecipe = (id) => {
 const recipeServise = async ({ id }) =>
   await Recipe.aggregate([...piplineOneRecipe(id)]);
 
-module.exports = recipeServise;
+const ownRecipeServise = async ({ id }) =>
+  await OwnRecipe.aggregate([...piplineOneRecipe(id)]);
+
+module.exports = {
+  recipeServise,
+  ownRecipeServise,
+};

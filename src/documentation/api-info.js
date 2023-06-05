@@ -10,7 +10,7 @@ const apiInfo = {
     },
   },
   consumes: ["application/json", "multipart/form-data"],
-  produces: ["application/json", "multipart/form-data"],
+  produces: ["application/json"],
   servers: [
     { url: "http://localhost:3001" },
     { url: "https://so-yummy-mg49.onrender.com" },

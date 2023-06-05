@@ -1,8 +1,11 @@
-const { Schema, model } = require("mongoose")
-const { handleMongooseError } = require("../utils")
-const Joi = require("joi")
+const { Schema, model } = require("mongoose");
+const { handleMongooseError } = require("../utils");
+const Joi = require("joi");
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+const nameRegex = /^[a-zA-Z0-9А-яЁёІіЇї\d]{1,16}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/;
+// const emailRegex =
+//   /^(?=.{7,35}$)[a-zA-Z0-9._]{1,35}@[a-zA-Z0-9._]{1,13}\.[a-zA-Z0-9._]{1,35}$/;
 
 const shoppingListSchema = new Schema(
   {
@@ -22,7 +25,7 @@ const shoppingListSchema = new Schema(
     },
   },
   { _id: false }
-)
+);
 
 const userSchema = new Schema(
   {
@@ -32,7 +35,6 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      match: emailRegex,
       required: [true, "Email is required"],
       unique: true,
     },
@@ -56,40 +58,71 @@ const userSchema = new Schema(
     shoppingList: [shoppingListSchema],
   },
   { versionKey: false, timestamps: true }
-)
+);
 
-userSchema.post("save", handleMongooseError)
+userSchema.post("save", handleMongooseError);
 
 const userRegistrSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().pattern(emailRegex).required(),
-  password: Joi.string().min(6).required(),
-})
+  name: Joi.string().regex(nameRegex).min(1).max(16).required().messages({
+    "string.pattern.base": "Name limit: 16 letters",
+  }),
+  email: Joi.string()
+    .min(7)
+    .max(35)
+    .email({ maxDomainSegments: 3, tlds: { deny: ["ru"] } })
+    .required()
+    .messages({
+      "email.string": "Email must be valid (without /ru/ domain)",
+    }),
+  password: Joi.string()
+    .min(6)
+    .max(16)
+    .regex(passwordRegex)
+    .required()
+    .messages({
+      "string.min": "Must have at least 6 characters",
+      "object.regex":
+        "Password must have at least 6 characters, 1 upper case, 1 lower case and 1 digit",
+      "string.pattern.base":
+        "Password must have at least 6 characters, only alpanum, 1 upper case, 1 lower case and 1 digit",
+    }),
+});
 
-const userEmailSchema = Joi.object({
-  email: Joi.string().pattern(emailRegex).required(),
-})
+// const userEmailSchema = Joi.object({
+//   email: Joi.string().regex(emailRegex).required().messages({
+//     "string.pattern.base": "Email must be valid",
+//   }),
+// });
 
 const userLoginSchema = Joi.object({
-  email: Joi.string().pattern(emailRegex).required(),
+  email: Joi.string()
+    .min(7)
+    .max(35)
+    .email({ maxDomainSegments: 3, tlds: { deny: ["ru"] } })
+    .required()
+    .messages({
+      "email.string": "Email must be valid (without /ru/ domain)",
+    }),
   password: Joi.string().required(),
-})
+});
 
 const userUpdateSchema = Joi.object({
-  name: Joi.string(),
-  avatarURL: Joi.any(),
-})
+  name: Joi.string().regex(nameRegex).min(1).max(16).required().messages({
+    "string.pattern.base": "Name limit: 16 letters",
+  }),
+  avatar: Joi.any(),
+});
 
 const schemas = {
   userRegistrSchema,
-  userEmailSchema,
+  // userEmailSchema,
   userLoginSchema,
   userUpdateSchema,
-}
+};
 
-const User = model("user", userSchema)
+const User = model("user", userSchema);
 
 module.exports = {
   User,
   schemas,
-}
+};

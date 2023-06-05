@@ -1,6 +1,6 @@
 const Recipe = require("../models/recipe");
 const recipeCategoryServise = require("../helpers/recipeCategoryServise");
-const recipeServise = require("../helpers/recipeServise");
+const { recipeServise } = require("../helpers/recipeServise");
 const { ctrlWrapper } = require("../utils");
 const { HttpError } = require("../helpers");
 const ObjectId = require("mongodb").ObjectId;
