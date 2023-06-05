@@ -6,7 +6,7 @@ const {
   isValidId,
   isValidCategory,
 } = require("../../middleWares");
-// const { schemas } = require("../../models/contact");
+
 const router = express.Router();
 
 router.get(

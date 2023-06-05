@@ -29,10 +29,12 @@ app.use("/api/recipes", recipeRoutes);
 app.use("/api", ingridientRoutes);
 app.use("/api/shopping-list", shoppingListRoutes);
 app.use("/api", subsRoutes);
+
 app.use("/api/ownRecipes", ownRecipesRoutes);
 
 // DOCUMENTATION
-app.use("/api", docRoutes);
+const { optimizeBody } = require("./src/middleWares");
+app.use("/api", optimizeBody, docRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

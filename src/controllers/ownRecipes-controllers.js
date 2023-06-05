@@ -45,7 +45,6 @@ const addOwnRecipe = async (req, res) => {
 const getOwnRecipes = async (req, res) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 4 } = req.query;
-  console.log(page);
   if (page < 1 || limit < 1) {
     throw HttpError(400, "Invalid page or limit value");
   }

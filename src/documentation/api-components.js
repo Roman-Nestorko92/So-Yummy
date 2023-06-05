@@ -301,24 +301,24 @@ const components = {
           },
           ingredients: {
             type: "array",
+            //   // items: {
+            //   //   type: "object",
+            //   //   properties: {
+            //   //     id: {
+            //   //       type: "string",
+            //   //       description: "id of ingredient",
+            //   //       example: "640c2dd963a319ea671e372c",
+            //   //     },
+            //   //     measure: {
+            //   //       type: "string",
+            //   //       description: "amount and measure type",
+            //   //       example: "1 spn",
+            //   //     },
+            //   //   },
+            //   // },
             items: {
-              type: "object",
-              properties: {
-                id: {
-                  type: "string",
-                  description: "id of ingredient",
-                  example: "640c2dd963a319ea671e372c",
-                },
-                measure: {
-                  type: "string",
-                  description: "amount and measure type",
-                  example: "1 spn",
-                },
-              },
+              $ref: "#/components/schemas/IngredientRequest",
             },
-            // items: {
-            //   $ref: "#/components/schemas/IngredientRequest",
-            // },
           },
           instructions: {
             type: "string",
