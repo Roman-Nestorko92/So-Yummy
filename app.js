@@ -33,8 +33,8 @@ app.use("/api", subsRoutes);
 app.use("/api/ownRecipes", ownRecipesRoutes);
 
 // DOCUMENTATION
-const { optimizeBody } = require("./src/middleWares");
-app.use("/api", optimizeBody, docRoutes);
+
+app.use("/api", docRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
