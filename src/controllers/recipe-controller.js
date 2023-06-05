@@ -1,7 +1,9 @@
 const Recipe = require("../models/recipe");
 const recipeCategoryServise = require("../helpers/recipeCategoryServise");
+const recipeServise = require("../helpers/recipeServise");
 const { ctrlWrapper } = require("../utils");
 const { HttpError } = require("../helpers");
+const ObjectId = require("mongodb").ObjectId;
 
 const getMainPageRecipe = async (req, res) => {
   const { categoryLimit = 4, recipeLimit = 4 } = req.query;
@@ -14,10 +16,50 @@ const getMainPageRecipe = async (req, res) => {
 const getRecipeById = async (req, res) => {
   const { id } = req.params;
 
-  const data = await Recipe.findById({ _id: id });
-  if (!data) {
-    throw HttpError(404, `Not found`);
-  }
+  const data = await recipeServise({ id });
+
+  // const recipe = await Recipe.aggregate([
+  //   {
+  //     $match: {
+  //       _id: new ObjectId(id),
+  //     },
+  //   },
+  //   {
+  //     $lookup: {
+  //       from: "ingridients",
+  //       localField: "ingredients.id",
+  //       foreignField: "_id",
+  //       as: "ingridientInfo",
+  //     },
+  //   },
+
+  //   {
+  //     $set: {
+  //       ingredients: {
+  //         $map: {
+  //           input: "$ingredients",
+  //           in: {
+  //             $mergeObjects: [
+  //               "$$this",
+  //               {
+  //                 $arrayElemAt: [
+  //                   "$ingridientInfo",
+  //                   {
+  //                     $indexOfArray: ["$ingridientInfo._id", "$$this.id"],
+  //                   },
+  //                 ],
+  //               },
+  //             ],
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  //   {
+  //     $unset: ["ingridientInfo", "ingredients.id"],
+  //   },
+  // ]);
+
   res.json(data);
 };
 
