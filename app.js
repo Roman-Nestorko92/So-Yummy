@@ -1,4 +1,3 @@
-
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
@@ -27,20 +26,20 @@ app.use("/api/auth", authRoutes);
 app.use("/api/popular-recipe", popularRecipeRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/recipes", recipeRoutes);
-app.use("/api", ingridientRoutes)
-app.use("/api/shopping-list", shoppingListRoutes)
-app.use("/api", subsRoutes)
+app.use("/api", ingridientRoutes);
+app.use("/api/shopping-list", shoppingListRoutes);
+app.use("/api", subsRoutes);
 // DOCUMENTATION
 
-app.use("/api", docRoutes)
+app.use("/api", docRoutes);
 app.use((req, res) => {
   res.status(404).json({
     message: "Not found",
-  })
-})
+  });
+});
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Server error" } = err
-  res.status(status).json({ message })
-})
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message });
+});
 
-module.exports = app
+module.exports = app;
