@@ -13,7 +13,7 @@ const register = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    throw HttpError(409, "Email already exist");
+    throw HttpError(409, "User with such Email already exist");
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
@@ -93,8 +93,6 @@ const logout = async (req, res) => {
     message: "Logout success",
   });
 };
-
-const avatarsDir = path.resolve("src/public", "avatars");
 
 const updateUser = async (req, res) => {
   const { name } = req.body;

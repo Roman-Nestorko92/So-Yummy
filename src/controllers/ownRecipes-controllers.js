@@ -3,6 +3,7 @@ const { OwnRecipe } = require("../models/ownRecipe");
 const { ctrlWrapper } = require("../utils");
 const { HttpError } = require("../helpers");
 const { cloudinary } = require("../utils");
+const { ownRecipeServise } = require("../helpers/recipeServise");
 
 const addOwnRecipe = async (req, res) => {
   const { title, description, category, time, instructions } = req.body;
@@ -66,8 +67,17 @@ const deleteOwnRecipe = async (req, res) => {
   res.status(204);
 };
 
+const getOwnRecipeById = async (req, res) => {
+  const { id } = req.params;
+
+  const data = await ownRecipeServise({ id });
+
+  res.json(data);
+};
+
 module.exports = {
   addOwnRecipe: ctrlWrapper(addOwnRecipe),
   getOwnRecipes: ctrlWrapper(getOwnRecipes),
   deleteOwnRecipe: ctrlWrapper(deleteOwnRecipe),
+  getOwnRecipeById: ctrlWrapper(getOwnRecipeById),
 };

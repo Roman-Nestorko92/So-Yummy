@@ -32,7 +32,7 @@ const authPath = {
             description: "Bad request ",
           },
           409: {
-            description: "Email already exist",
+            description: "User with such Email already exist",
           },
           500: { description: "Server error" },
         },

@@ -30,15 +30,6 @@ const recipeIngredientSchema = new Schema(
       required: true,
       default: "",
     },
-    thb: {
-      type: String,
-      default: "",
-    },
-    title: {
-      type: String,
-      required: true,
-      default: "",
-    },
   },
   { _id: false }
 );
@@ -69,12 +60,14 @@ const ownRecipeSchema = new Schema(
       type: Number,
       min: 5,
       max: 120,
+      trim: true,
       required: true,
     },
     ingredients: [recipeIngredientSchema],
     instructions: {
       type: String,
       maxLength: 400,
+      trim: true,
       required: true,
     },
     preview: {
@@ -92,8 +85,7 @@ const ownRecipeSchema = new Schema(
 
 const ingredientSchema = Joi.object({
   id: Joi.string().required(),
-  amount: Joi.string().required(),
-  measure: Joi.string(),
+  measure: Joi.string().required(),
 });
 
 const ownRecipesAddSchema = Joi.object({
