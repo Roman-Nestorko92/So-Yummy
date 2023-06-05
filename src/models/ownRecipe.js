@@ -22,16 +22,21 @@ const categoryList = [
 const recipeIngredientSchema = new Schema(
   {
     id: {
-      type: Schema.Types.ObjectId,
-      ref: "ingredient",
-      required: true,
-    },
-    amount: {
       type: String,
       required: true,
     },
     measure: {
       type: String,
+      required: true,
+      default: "",
+    },
+    thb: {
+      type: String,
+      default: "",
+    },
+    title: {
+      type: String,
+      required: true,
       default: "",
     },
   },

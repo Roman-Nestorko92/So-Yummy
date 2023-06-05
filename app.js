@@ -5,14 +5,13 @@ require("dotenv").config();
 const authRoutes = require("./src/routes/api/auth-routes");
 
 const recipeRoutes = require("./src/routes/api/recipe-routes");
-
 const popularRecipeRoutes = require("./src/routes/api/popularRecipe-routes");
-
 const searchRoutes = require("./src/routes/api/search-routes");
-
 const docRoutes = require("./src/routes/api/api-docs-routes");
 const subsRoutes = require("./src/routes/api/subscription-routes");
 const ownRecipesRoutes = require("./src/routes/api/ownRecipes-routes");
+const ingridientRoutes = require("./src/routes/api/ingredienslist-routes");
+const shoppingListRoutes = require("./src/routes/api/shopinglist-routes");
 
 const app = express();
 
@@ -31,8 +30,10 @@ app.use("/api", ingridientRoutes);
 app.use("/api/shopping-list", shoppingListRoutes);
 app.use("/api", subsRoutes);
 app.use("/api/ownRecipes", ownRecipesRoutes);
+
 // DOCUMENTATION
 app.use("/api", docRoutes);
+
 app.use((req, res) => {
   res.status(404).json({
     message: "Not found",
