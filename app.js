@@ -29,9 +29,11 @@ app.use("/api/recipes", recipeRoutes);
 app.use("/api", ingridientRoutes);
 app.use("/api/shopping-list", shoppingListRoutes);
 app.use("/api", subsRoutes);
+
 app.use("/api/ownRecipes", ownRecipesRoutes);
 
 // DOCUMENTATION
+
 app.use("/api", docRoutes);
 
 app.use((req, res) => {

@@ -4,16 +4,7 @@ const { ctrlWrapper } = require("../utils");
 const getSearchRecipes = async (req, res) => {
   const { title } = req.query;
 
-  //   await Recipe.createIndex({
-  //     title: "text",
-  //   });
-
-  const result = await Recipe.find(
-    { $text: { $search: title } }
-
-    // { score: { $meta: "toextScore" } }
-  );
-  //   .sort({ score: { $meta: "textScore" } });
+  const result = await Recipe.find({ $text: { $search: title } });
 
   res.status(200).json(result);
 };

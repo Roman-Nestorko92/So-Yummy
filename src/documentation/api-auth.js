@@ -233,7 +233,30 @@ const authPath = {
       post: {
         tags: ["Own Recipes"],
         summary: "Creating user's own recipe",
-        parameters: [],
+        parameters: [
+          // {
+          //   name: "ingredients",
+          //   in: "formData",
+          //   description: "My array data",
+          //   required: true,
+          //   type: "array",
+          //   items: {
+          //     type: "object",
+          //     properties: {
+          //       id: {
+          //         type: "string",
+          //         description: "id of ingredient",
+          //         example: "640c2dd963a319ea671e372c",
+          //       },
+          //       measure: {
+          //         type: "string",
+          //         description: "amount and measure type",
+          //         example: "1 spn",
+          //       },
+          //     },
+          //   },
+          // },
+        ],
         security: [{ Bearer: [] }],
         requestBody: {
           description: "Object with info regarding recipe",
