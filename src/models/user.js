@@ -1,10 +1,30 @@
-const { Schema, model } = require("mongoose");
-const { handleMongooseError } = require("../utils");
-const Joi = require("joi");
+const { Schema, model } = require("mongoose")
+const { handleMongooseError } = require("../utils")
+const Joi = require("joi")
 
 const nameRegex = /^[a-zA-Z0-9А-яЁёІіЇї\d]{1,16}$/;
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,16}$/; // one  letter, one digit, min 6 max 16
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+const shoppingListSchema = new Schema(
+  {
+    id: {
+      type: String,
+      required: true,
+    },
+    measure: {
+      type: String,
+      default: "",
+    },
+    thb: {
+      type: String,
+    },
+    title: {
+      type: String,
+    },
+  },
+  { _id: false }
+)
 
 const userSchema = new Schema(
   {
@@ -35,11 +55,12 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    shoppingList: [shoppingListSchema],
   },
   { versionKey: false, timestamps: true }
-);
+)
 
-userSchema.post("save", handleMongooseError);
+userSchema.post("save", handleMongooseError)
 
 const userRegistrSchema = Joi.object({
   name: Joi.string().regex(nameRegex).min(1).max(16).required().messages({
@@ -68,23 +89,23 @@ const userEmailSchema = Joi.object({
 const userLoginSchema = Joi.object({
   email: Joi.string().pattern(emailRegex).required(),
   password: Joi.string().required(),
-});
+})
 
 const userUpdateSchema = Joi.object({
   name: Joi.string().regex(nameRegex).min(1).max(16),
   avatarURL: Joi.any(),
-});
+})
 
 const schemas = {
   userRegistrSchema,
   userEmailSchema,
   userLoginSchema,
   userUpdateSchema,
-};
+}
 
-const User = model("user", userSchema);
+const User = model("user", userSchema)
 
 module.exports = {
   User,
   schemas,
-};
+}
