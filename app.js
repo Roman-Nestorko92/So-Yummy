@@ -26,8 +26,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/popular-recipe", popularRecipeRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/recipes", recipeRoutes);
-// app.use("/api", ingridientRoutes)
-// app.use("/api/shopping-list", shoppingListRoutes)
+app.use("/api", ingridientRoutes);
+app.use("/api/shopping-list", shoppingListRoutes);
 app.use("/api", subsRoutes);
 // DOCUMENTATION
 
