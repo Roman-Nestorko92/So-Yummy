@@ -8,6 +8,7 @@ const { ownRecipeServise } = require("../helpers/recipeServise");
 const addOwnRecipe = async (req, res) => {
   const { title, description, category, time, instructions } = req.body;
   const { _id: owner } = req.user;
+  // console.log(ingredients);
 
   const ingredients = req.body.ingredients.map((item) => {
     return { ...item, id: new ObjectId(item.id) };
@@ -51,26 +52,51 @@ const getOwnRecipes = async (req, res) => {
 
   const skip = (page - 1) * limit;
 
-  const data = await OwnRecipe.find({ owner }, "-updatedAt -createdAt -owner", {
-    skip,
-    limit,
-  });
+  const data = await OwnRecipe.aggregate([
+    {
+      $match: {
+        owner,
+      },
+    },
+    {
+      $project: {
+        preview: 1,
+        title: 1,
+        time: 1,
+        description: 1,
+        _id: 1,
+      },
+    },
+    {
+      $skip: Number(skip),
+    },
+    {
+      $limit: Number(limit),
+    },
+  ]);
 
   res.json(data);
 };
 const deleteOwnRecipe = async (req, res) => {
-  const deletedRecipe = await OwnRecipe.findByIdAndRemove(req.params.recipeId);
+  const deletedRecipe = await OwnRecipe.findByIdAndRemove(
+    req.params.ownRecipeId
+  );
+
   if (!deletedRecipe) {
-    throw HttpError(404, `Recipe with id "${req.params.recipeId}" is missing`);
+    throw HttpError(
+      404,
+      `Recipe with id "${req.params.ownRecipeId}" is missing`
+    );
   }
   res.status(204);
 };
 
 const getOwnRecipeById = async (req, res) => {
-  const { id } = req.params;
+  const { ownRecipeId } = req.params;
+  console.log(ownRecipeId);
 
-  const data = await ownRecipeServise({ id });
-
+  const data = await ownRecipeServise({ ownRecipeId });
+  console.log(data);
   res.json(data);
 };
 

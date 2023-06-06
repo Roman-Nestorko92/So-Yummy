@@ -393,6 +393,122 @@ const components = {
           instructions: "bake 15 minutes",
         },
       },
+      GetOwnRecipeResponse: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              description: "Id of the recipe",
+              example: "647c86459fec93f88e9aaa28",
+            },
+            title: {
+              type: "string",
+              description: "title of recipe",
+              example: "Pizza",
+            },
+            description: {
+              type: "string",
+              description: "Brief description of dish",
+              example: "Italian cuisine",
+            },
+            time: {
+              type: "integer",
+              description: "time of cooking",
+              example: 30,
+            },
+            description: {
+              type: "string",
+              description: "url of image ( if it not provided - empty string",
+              example:
+                "http://res.cloudinary.com/dcxlayslv/image/upload/v1/ownrecipe/khzieh9fkxkrvyitgxa3",
+            },
+          },
+        },
+      },
+      IngredientResponse: {
+        type: "object",
+        properties: {
+          _id: {
+            type: "string",
+            description: "ID of ingredient",
+            example: "640c2dd963a319ea671e365b",
+          },
+          desc: {
+            type: "string",
+            description: "Description of ingr",
+            example: "Very tasty",
+          },
+          ttl: {
+            type: "string",
+            description: "Name of ingr",
+            example: "Chicken",
+          },
+          measure: {
+            type: "string",
+            description: "amount and measure of ingr",
+            example: "300 g",
+          },
+          thb: {
+            type: "string",
+            description: "url of image",
+            example:
+              "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564123/rw8pn3541bmukb8d3mio.png",
+          },
+        },
+      },
+      GetOwnRecipeByIDResponse: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              description: "Id of the recipe",
+              example: "647c86459fec93f88e9aaa28",
+            },
+            title: {
+              type: "string",
+              description: "title of recipe",
+              example: "Pizza",
+            },
+            description: {
+              type: "string",
+              description: "Brief description of dish",
+              example: "Italian cuisine",
+            },
+            category: {
+              type: "string",
+              description: "Category of dish",
+              example: "Miscellaneous",
+            },
+
+            time: {
+              type: "integer",
+              description: "time of cooking",
+              example: 30,
+            },
+            ingredients: {
+              type: "array",
+              items: {
+                $ref: "#/components/schemas/IngredientResponse",
+              },
+              instructions: {
+                type: "string",
+                description: "Instruction regarding procedures",
+                example: "Bake 30 minutes",
+              },
+              preview: {
+                type: "string",
+                description: "url of image ( if it not provided - empty string",
+                example:
+                  "http://res.cloudinary.com/dcxlayslv/image/upload/v1/ownrecipe/khzieh9fkxkrvyitgxa3",
+              },
+            },
+          },
+        },
+      },
     },
     securitySchemes: {
       Bearer: {
@@ -403,4 +519,5 @@ const components = {
     },
   },
 };
+
 module.exports = components;
