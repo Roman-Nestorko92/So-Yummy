@@ -12,6 +12,7 @@ const subsRoutes = require("./src/routes/api/subscription-routes")
 const ownRecipesRoutes = require("./src/routes/api/ownRecipes-routes")
 const ingridientRoutes = require("./src/routes/api/ingredienslist-routes")
 const shoppingListRoutes = require("./src/routes/api/shopinglist-routes")
+const favoriteRoutes = require("./src/routes/api/favorite-routes")
 
 const app = express()
 
@@ -29,7 +30,7 @@ app.use("/api/recipes", recipeRoutes)
 app.use("/api", ingridientRoutes)
 app.use("/api/shopping-list", shoppingListRoutes)
 app.use("/api", subsRoutes)
-// app.use("/api/favorite", favoriteRoutes)
+app.use("/api/favorite", favoriteRoutes)
 app.use("/api/ownRecipes", ownRecipesRoutes)
 
 // DOCUMENTATION

@@ -1,12 +1,15 @@
 const express = require("express")
 const router = express.Router()
-const { authentificate, isValidId } = require("../../middleWares")
+const {
+  authentificate,
+  isValidId,
+  isValidIdRecipe,
+} = require("../../middleWares")
 const favoriteList = require("../../controllers/favorite-controller")
 
 router.use(authentificate)
 
-router.post("/", favoriteList.postAddfavorite)
-router.delete("/:id", isValidId, favoriteList.deletefavorite)
+router.patch("/:id", isValidId, isValidIdRecipe, favoriteList.patchAddfavorite)
 router.get("/", favoriteList.getAllfavorite)
 
 module.exports = router
