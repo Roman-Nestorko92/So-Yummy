@@ -1,5 +1,10 @@
+const { capitalizeString } = require("../helpers");
+
 const optimizeBody = (req, res, next) => {
-  console.log("test");
+  if (req.params.category) {
+    req.params.category = capitalizeString(req.params.category);
+  }
+
   if (req.body) {
     const { category, ingredients: string } = req.body;
     if (string) {
@@ -7,9 +12,7 @@ const optimizeBody = (req, res, next) => {
     }
 
     if (category) {
-      const modifiedCategory =
-        category.charAt(0).toUpperCase() + category.slice(1);
-      req.body.category = modifiedCategory;
+      req.body.category = capitalizeString(category);
     }
   }
 

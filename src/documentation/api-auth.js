@@ -392,6 +392,101 @@ const authPath = {
         },
       },
     },
+    "/api/recipes/main-page": {
+      get: {
+        tags: ["Recipes"],
+        summary: "Recipes for main page",
+        parameters: [
+          {
+            name: "categoryLimit",
+            in: "query",
+            description: "Number of requested categories (default 4)",
+            schema: {
+              type: "integer",
+              minimum: 1,
+              default: 4,
+            },
+          },
+          {
+            name: "recipeLimit",
+            in: "query",
+            description: "Number of requested recipes per category (default 4)",
+            schema: {
+              type: "integer",
+              minimum: 1,
+              default: 4,
+            },
+          },
+        ],
+        security: [{ Bearer: [] }],
+        responses: {
+          200: {
+            description: "Success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/MainPageResponse",
+                },
+              },
+            },
+          },
+          400: {
+            description:
+              "Bad request / Invalid categoryLimit or recipeLimit query parameter",
+          },
+          401: { description: "Unauthorized" },
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/api/recipes/category/{category}": {
+      get: {
+        tags: ["Recipes"],
+        summary: "Get recipes by category",
+        parameters: [
+          {
+            name: "recipeLimit",
+            in: "query",
+            description: "Limit of recipes you request by category (default 8)",
+            schema: {
+              type: "integer",
+              minimum: 1,
+              default: 8,
+            },
+          },
+          {
+            name: "category",
+            in: "path",
+            description: "Category that you request (ex. Beef)",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        security: [{ Bearer: [] }],
+        responses: {
+          200: {
+            description: "Success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/MainPageResponse",
+                },
+              },
+            },
+          },
+          400: {
+            description:
+              "Bad request / Invalid categoryLimit or recipeLimit query parameter",
+          },
+          404: {
+            description: "Bad request / Category is not valid",
+          },
+          401: { description: "Unauthorized" },
+          500: { description: "Server error" },
+        },
+      },
+    },
   },
 };
 
