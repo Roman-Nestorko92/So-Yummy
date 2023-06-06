@@ -92,10 +92,9 @@ const deleteOwnRecipe = async (req, res) => {
 
 const getOwnRecipeById = async (req, res) => {
   const { ownRecipeId } = req.params;
-  console.log(ownRecipeId);
 
   const data = await ownRecipeServise({ ownRecipeId });
-  console.log(data);
+
   res.json(data);
 };
 

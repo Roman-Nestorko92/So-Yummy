@@ -25,16 +25,16 @@ router.get("/", authentificate, ownRecipesControllers.getOwnRecipes);
 
 router.get(
   "/:ownRecipeId",
+  authentificate,
   isValidId,
   isValidIdRecipe,
-  authentificate,
   ownRecipesControllers.getOwnRecipeById
 );
 
 router.delete(
   "/:ownRecipeId",
-  isValidId,
   authentificate,
+  isValidId,
   ownRecipesControllers.deleteOwnRecipe
 );
 

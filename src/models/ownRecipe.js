@@ -58,9 +58,7 @@ const ownRecipeSchema = new Schema(
       required: true,
     },
     time: {
-      type: Number,
-      min: 5,
-      max: 120,
+      type: String,
       trim: true,
       required: true,
     },
@@ -105,7 +103,7 @@ const ownRecipesAddSchema = Joi.object({
       "any.required":
         "Category option is rescticted by options given in GET /api/recipes/category-list",
     }),
-  time: Joi.number().min(5).max(120).required(),
+  time: Joi.string().required(),
   ingredients: Joi.array().items(ingredientSchema),
   preview: Joi.any(),
   instructions: Joi.string().max(400).required().messages({

@@ -1,5 +1,5 @@
-const Joi = require("joi")
-const { Schema, model } = require("mongoose")
+const Joi = require("joi");
+const { Schema, model } = require("mongoose");
 
 const recipeSchema = new Schema(
   {
@@ -51,21 +51,8 @@ const recipeSchema = new Schema(
     },
   },
   { versionKey: false, timestamps: true }
-)
+);
 
-const addSchema = Joi.object({
-  title: Joi.string().required(),
-  instructions: Joi.string().required(),
-  thumb: Joi.string().required(),
-})
+const Recipe = model("recipe", recipeSchema);
 
-const schemas = {
-  addSchema,
-}
-
-const Recipe = model("recipe", recipeSchema)
-
-module.exports = {
-  Recipe,
-  schemas,
-}
+module.exports = Recipe;

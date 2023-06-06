@@ -27,7 +27,7 @@ const getRecipeById = async (req, res) => {
 
 const getCategoryRecipe = async (req, res) => {
   const { recipeLimit = 8 } = req.query;
-  const { category = "Beef" } = req.params;
+  const { category } = req.params;
   if (recipeLimit < 1) {
     throw HttpError(400, "Invalid recipeLimit parameter");
   }

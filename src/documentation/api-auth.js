@@ -457,6 +457,7 @@ const authPath = {
           {
             name: "category",
             in: "path",
+            required: true,
             description: "Category that you request (ex. Beef)",
             schema: {
               type: "string",
@@ -476,11 +477,50 @@ const authPath = {
             },
           },
           400: {
-            description:
-              "Bad request / Invalid categoryLimit or recipeLimit query parameter",
+            description: "Bad request / Invalid recipeLimit parameter / ",
           },
           404: {
-            description: "Bad request / Category is not valid",
+            description: "Not found / Category is not valid",
+          },
+          401: { description: "Unauthorized" },
+          500: { description: "Server error" },
+        },
+      },
+    },
+    "/api/recipes/{id}": {
+      get: {
+        tags: ["Recipes"],
+        summary: "Get single recipe by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of Recipe",
+            schema: {
+              type: "string",
+              example: "640cd5ac2d9fecf12e8897fc",
+            },
+          },
+        ],
+        security: [{ Bearer: [] }],
+        responses: {
+          200: {
+            description: "Success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/RecibeByIdResponse",
+                },
+              },
+            },
+          },
+          400: {
+            description: "Bad request / Invalid recipeLimit parameter ",
+          },
+          404: {
+            description:
+              "Not found / ID is not valid /Recipe with such ID is not found",
           },
           401: { description: "Unauthorized" },
           500: { description: "Server error" },
