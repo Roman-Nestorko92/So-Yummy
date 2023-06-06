@@ -3,6 +3,7 @@ const authentificate = require("./authentificate");
 const { uploadRecipe, uploadAvatar } = require("./upload");
 const optimizeBody = require("./optimizeBody");
 const isValidCategory = require("./validateCategory");
+const isValidIdRecipe = require("./isValidIdRecipe");
 
 module.exports = {
   isValidId,
@@ -11,4 +12,5 @@ module.exports = {
   uploadAvatar,
   optimizeBody,
   isValidCategory,
+  isValidIdRecipe,
 };

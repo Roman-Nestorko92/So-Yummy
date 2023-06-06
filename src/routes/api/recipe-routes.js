@@ -5,6 +5,7 @@ const {
   authentificate,
   isValidId,
   isValidCategory,
+  isValidIdRecipe,
 } = require("../../middleWares");
 
 const router = express.Router();
@@ -17,7 +18,13 @@ router.get(
 
 router.get("/main-page", authentificate, controllers.getMainPageRecipe);
 
-router.get("/:id", authentificate, isValidId, controllers.getRecipeById);
+router.get(
+  "/:id",
+  authentificate,
+  isValidId,
+  isValidIdRecipe,
+  controllers.getRecipeById
+);
 
 router.get(
   "/category/:category",
