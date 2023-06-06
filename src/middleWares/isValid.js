@@ -3,8 +3,10 @@ const { HttpError } = require("../helpers");
 
 const isValidId = (req, res, next) => {
   const { id } = req.params;
-  if (!isValidObjectId(id)) {
-    next(HttpError(404, `${id} is not valid id`));
+  const { ownRecipeId } = req.params;
+  const idReq = id ? id : ownRecipeId;
+  if (!isValidObjectId(idReq)) {
+    next(HttpError(404, `${idReq} is not valid id`));
   }
   next();
 };

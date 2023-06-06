@@ -435,10 +435,15 @@ const components = {
             description: "ID of ingredient",
             example: "640c2dd963a319ea671e365b",
           },
+          desc: {
+            type: "string",
+            description: "Description of ingr",
+            example: "Very tasty",
+          },
           ttl: {
             type: "string",
             description: "Name of ingr",
-            example: "Chiken",
+            example: "Chicken",
           },
           measure: {
             type: "string",

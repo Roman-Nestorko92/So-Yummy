@@ -8,6 +8,7 @@ const { ownRecipeServise } = require("../helpers/recipeServise");
 const addOwnRecipe = async (req, res) => {
   const { title, description, category, time, instructions } = req.body;
   const { _id: owner } = req.user;
+  // console.log(ingredients);
 
   const ingredients = req.body.ingredients.map((item) => {
     return { ...item, id: new ObjectId(item.id) };
@@ -91,10 +92,11 @@ const deleteOwnRecipe = async (req, res) => {
 };
 
 const getOwnRecipeById = async (req, res) => {
-  const { id } = req.params;
+  const { ownRecipeId } = req.params;
+  console.log(ownRecipeId);
 
-  const data = await ownRecipeServise({ id });
-
+  const data = await ownRecipeServise({ ownRecipeId });
+  console.log(data);
   res.json(data);
 };
 

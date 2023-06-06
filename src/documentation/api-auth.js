@@ -328,14 +328,14 @@ const authPath = {
         },
       },
     },
-    "/api/ownRecipes/{id}": {
+    "/api/ownRecipes/{ownRecipeId}": {
       get: {
         tags: ["Own Recipes"],
 
         summary: "Get own recipe by ID",
         parameters: [
           {
-            name: "id",
+            name: "ownRecipeId",
             in: "path",
             description: "Own recipe ID",
             required: true,
@@ -364,14 +364,12 @@ const authPath = {
           500: { description: "Server error" },
         },
       },
-    },
-    "/api/ownRecipes/{id}": {
       delete: {
         tags: ["Own Recipes"],
         summary: "Delete own recipe by ID",
         parameters: [
           {
-            name: "id",
+            name: "ownRecipeId",
             in: "path",
             description: "Own recipe ID",
             required: true,
