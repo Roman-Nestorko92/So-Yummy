@@ -10,7 +10,7 @@ const apiTags = {
     },
     {
       name: "Recipes",
-      description: "Recipes endpoints",
+      description: "Recipes for Main Page, Categories and Single Recipe info",
     },
     {
       name: "Category List",

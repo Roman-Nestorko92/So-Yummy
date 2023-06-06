@@ -4,8 +4,7 @@ const Joi = require("joi");
 
 const nameRegex = /^[a-zA-Z0-9А-яЁёІіЇї\d]{1,16}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/;
-// const emailRegex =
-//   /^(?=.{7,35}$)[a-zA-Z0-9._]{1,35}@[a-zA-Z0-9._]{1,13}\.[a-zA-Z0-9._]{1,35}$/;
+const emailRegex = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9_.]+(\.[a-zA-Z]+){1,2}$/;
 
 const shoppingListSchema = new Schema(
   {
@@ -31,15 +30,18 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
+      trim: true,
       required: true,
     },
     email: {
       type: String,
+      trim: true,
       required: [true, "Email is required"],
       unique: true,
     },
     password: {
       type: String,
+      trim: true,
       minlegth: 6,
       required: [true, "Set password for user"],
     },
@@ -69,10 +71,12 @@ const userRegistrSchema = Joi.object({
   email: Joi.string()
     .min(7)
     .max(35)
+    .regex(emailRegex)
     .email({ maxDomainSegments: 3, tlds: { deny: ["ru"] } })
     .required()
     .messages({
-      "email.string": "Email must be valid (without /ru/ domain)",
+      "string.pattern.base": "min 7, max 35, only alphanum, `.`, `_` allowed",
+      "any.required": "email is required",
     }),
   password: Joi.string()
     .min(6)
@@ -98,7 +102,11 @@ const userLoginSchema = Joi.object({
   email: Joi.string()
     .min(7)
     .max(35)
-    .email({ maxDomainSegments: 3, tlds: { deny: ["ru"] } })
+    .email({
+      allowUnicode: false,
+      maxDomainSegments: 3,
+      tlds: { deny: ["ru"] },
+    })
     .required()
     .messages({
       "email.string": "Email must be valid (without /ru/ domain)",

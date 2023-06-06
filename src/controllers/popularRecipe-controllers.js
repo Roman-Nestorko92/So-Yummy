@@ -1,7 +1,12 @@
 const Recipe = require("../models/recipe");
 const { ctrlWrapper } = require("../utils");
+const { HttpError } = require("../helpers");
 
 const getPopularRecipes = async (req, res) => {
+  const { limit = 4 } = req.query;
+  if (limit < 1) {
+    throw HttpError(400, "Invalid limit parameter");
+  }
   const result = await Recipe.aggregate([
     {
       $addFields: {
@@ -27,6 +32,9 @@ const getPopularRecipes = async (req, res) => {
       $sort: {
         points: -1,
       },
+    },
+    {
+      $limit: Number(limit),
     },
   ]);
   res.status(200).json(result);

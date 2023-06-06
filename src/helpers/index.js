@@ -1,10 +1,9 @@
 const HttpError = require("./HttpError");
 const sendEmail = require("./sendEmail");
-
-// const recipeCategoryServise = require("./recipeCategoryServise");
+const capitalizeString = require("./capitalizeString");
 
 module.exports = {
   HttpError,
   sendEmail,
-  // recipeCategoryServise,
+  capitalizeString,
 };
