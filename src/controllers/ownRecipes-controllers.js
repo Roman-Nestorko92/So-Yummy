@@ -51,10 +51,28 @@ const getOwnRecipes = async (req, res) => {
 
   const skip = (page - 1) * limit;
 
-  const data = await OwnRecipe.find({ owner }, "-updatedAt -createdAt -owner", {
-    skip,
-    limit,
-  });
+  const data = await OwnRecipe.aggregate([
+    {
+      $match: {
+        owner,
+      },
+    },
+    {
+      $project: {
+        preview: 1,
+        title: 1,
+        time: 1,
+        description: 1,
+        _id: 1,
+      },
+    },
+    {
+      $skip: Number(skip),
+    },
+    {
+      $limit: Number(limit),
+    },
+  ]);
 
   res.json(data);
 };
