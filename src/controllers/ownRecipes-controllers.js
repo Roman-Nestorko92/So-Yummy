@@ -77,9 +77,15 @@ const getOwnRecipes = async (req, res) => {
   res.json(data);
 };
 const deleteOwnRecipe = async (req, res) => {
-  const deletedRecipe = await OwnRecipe.findByIdAndRemove(req.params.recipeId);
+  const deletedRecipe = await OwnRecipe.findByIdAndRemove(
+    req.params.ownRecipeId
+  );
+
   if (!deletedRecipe) {
-    throw HttpError(404, `Recipe with id "${req.params.recipeId}" is missing`);
+    throw HttpError(
+      404,
+      `Recipe with id "${req.params.ownRecipeId}" is missing`
+    );
   }
   res.status(204);
 };

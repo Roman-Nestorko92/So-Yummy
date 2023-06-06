@@ -21,10 +21,14 @@ router.post(
 
 router.get("/", authentificate, ownRecipesControllers.getOwnRecipes);
 
-router.get("/:id", authentificate, ownRecipesControllers.getOwnRecipeById);
+router.get(
+  "/:ownRecipeId",
+  authentificate,
+  ownRecipesControllers.getOwnRecipeById
+);
 
 router.delete(
-  "/:recipeId",
+  "/:ownRecipeId",
   authentificate,
   ownRecipesControllers.deleteOwnRecipe
 );
