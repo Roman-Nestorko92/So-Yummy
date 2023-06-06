@@ -50,8 +50,8 @@ const piplineOneRecipe = (id) => {
 const recipeServise = async ({ id }) =>
   await Recipe.aggregate([...piplineOneRecipe(id)]);
 
-const ownRecipeServise = async ({ id }) =>
-  await OwnRecipe.aggregate([...piplineOneRecipe(id)]);
+const ownRecipeServise = async ({ ownRecipeId }) =>
+  await OwnRecipe.aggregate([...piplineOneRecipe(ownRecipeId)]);
 
 module.exports = {
   recipeServise,

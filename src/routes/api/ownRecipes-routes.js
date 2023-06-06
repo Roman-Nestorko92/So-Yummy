@@ -7,7 +7,9 @@ const { validateBody } = require("../../utils");
 const {
   authentificate,
   uploadRecipe,
+  isValidId,
   optimizeBody,
+  isValidIdRecipe,
 } = require("../../middleWares");
 
 router.post(
@@ -21,10 +23,17 @@ router.post(
 
 router.get("/", authentificate, ownRecipesControllers.getOwnRecipes);
 
-router.get("/:id", authentificate, ownRecipesControllers.getOwnRecipeById);
+router.get(
+  "/:ownRecipeId",
+  isValidId,
+  isValidIdRecipe,
+  authentificate,
+  ownRecipesControllers.getOwnRecipeById
+);
 
 router.delete(
-  "/:recipeId",
+  "/:ownRecipeId",
+  isValidId,
   authentificate,
   ownRecipesControllers.deleteOwnRecipe
 );
