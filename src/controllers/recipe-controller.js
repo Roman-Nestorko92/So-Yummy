@@ -1,7 +1,6 @@
-const Recipe = require("../models/recipe");
 const recipeCategoryServise = require("../helpers/recipeCategoryServise");
+const { recipeServise } = require("../helpers/recipeServise");
 const { ctrlWrapper } = require("../utils");
-const { HttpError } = require("../helpers");
 
 const getMainPageRecipe = async (req, res) => {
   const { categoryLimit = 4, recipeLimit = 4 } = req.query;
@@ -14,10 +13,8 @@ const getMainPageRecipe = async (req, res) => {
 const getRecipeById = async (req, res) => {
   const { id } = req.params;
 
-  const data = await Recipe.findById({ _id: id });
-  if (!data) {
-    throw HttpError(404, `Not found`);
-  }
+  const data = await recipeServise({ id });
+
   res.json(data);
 };
 

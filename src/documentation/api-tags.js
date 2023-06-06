@@ -12,6 +12,14 @@ const apiTags = {
       name: "Recipes",
       description: "Recipes endpoints",
     },
+    {
+      name: "Category List",
+      description: "Get list of available categories",
+    },
+    {
+      name: "Own Recipes",
+      description: "Recipes created by user",
+    },
   ],
 };
 

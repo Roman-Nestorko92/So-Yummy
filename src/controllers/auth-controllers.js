@@ -5,14 +5,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
-const fs = require("fs/promises");
+
+const { cloudinary } = require("../utils");
 const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    throw HttpError(409, "Email already exist");
+    throw HttpError(409, "User with such Email already exist");
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
@@ -93,11 +94,8 @@ const logout = async (req, res) => {
   });
 };
 
-const avatarsDir = path.resolve("src/public", "avatars");
-
 const updateUser = async (req, res) => {
   const { name } = req.body;
-  console.log(req.body);
   if (!name && !req.file) {
     throw HttpError(400, "Provide all necessary fields");
   }
@@ -107,11 +105,8 @@ const updateUser = async (req, res) => {
   }
 
   if (req.file) {
-    const { path: tempUpload, filename } = req.file;
-    const resultUpload = path.join(avatarsDir, filename);
-    await fs.rename(tempUpload, resultUpload);
-    const avatarURL = path.join("avatars", filename);
-    req.user.avatarURL = avatarURL;
+    const imageUrl = cloudinary.url(req.file.filename);
+    req.user.avatarURL = imageUrl;
   }
 
   const data = {
