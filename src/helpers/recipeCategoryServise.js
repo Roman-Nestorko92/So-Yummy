@@ -49,6 +49,8 @@ const piplineRecipe = (categoryLimit, recipeLimit, category) => {
             title: "$recipes.title",
             preview: "$recipes.preview",
             thumb: "$recipes.thumb",
+            description: "$recipes.description",
+            time: "$recipes.time",
           },
         },
         points: {
