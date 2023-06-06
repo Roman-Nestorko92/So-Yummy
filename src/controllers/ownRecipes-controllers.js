@@ -8,7 +8,6 @@ const { ownRecipeServise } = require("../helpers/recipeServise");
 const addOwnRecipe = async (req, res) => {
   const { title, description, category, time, instructions } = req.body;
   const { _id: owner } = req.user;
-  // console.log(ingredients);
 
   const ingredients = req.body.ingredients.map((item) => {
     return { ...item, id: new ObjectId(item.id) };

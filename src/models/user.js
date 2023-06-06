@@ -98,7 +98,12 @@ const userLoginSchema = Joi.object({
   email: Joi.string()
     .min(7)
     .max(35)
-    .email({ maxDomainSegments: 3, tlds: { deny: ["ru"] } })
+    .email({
+      allowUnicode: false,
+      maxDomainSegments: 3,
+      tlds: { deny: ["ru"] },
+    })
+    .alphanum()
     .required()
     .messages({
       "email.string": "Email must be valid (without /ru/ domain)",
