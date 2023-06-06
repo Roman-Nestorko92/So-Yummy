@@ -1,34 +1,34 @@
+const express = require("express")
+const logger = require("morgan")
+const cors = require("cors")
+require("dotenv").config()
 
-const express = require("express");
-const logger = require("morgan");
-const cors = require("cors");
-require("dotenv").config();
-const authRoutes = require("./src/routes/api/auth-routes");
+const authRoutes = require("./src/routes/api/auth-routes")
+const recipeRoutes = require("./src/routes/api/recipe-routes")
+const popularRecipeRoutes = require("./src/routes/api/popularRecipe-routes")
+const searchRoutes = require("./src/routes/api/search-routes")
+const docRoutes = require("./src/routes/api/api-docs-routes")
+const subsRoutes = require("./src/routes/api/subscription-routes")
+const favoriteRoutes = require("./src/routes/api/favorite-routes")
+const ingridientRoutes = require("./src/routes/api/ingredienslist-routes")
+const shoppingListRoutes = require("./src/routes/api/shopinglist-routes")
 
-const recipeRoutes = require("./src/routes/api/recipe-routes");
+const app = express()
 
-const popularRecipeRoutes = require("./src/routes/api/popularRecipe-routes");
+const formatsLogger = app.get("env") === "development" ? "dev" : "short"
 
-const searchRoutes = require("./src/routes/api/search-routes");
+app.use(logger(formatsLogger))
+app.use(cors())
+app.use(express.json())
+app.use(express.json("public"))
 
-const docRoutes = require("./src/routes/api/api-docs-routes");
-const subsRoutes = require("./src/routes/api/subscription-routes");
-
-const app = express();
-
-const formatsLogger = app.get("env") === "development" ? "dev" : "short";
-
-app.use(logger(formatsLogger));
-app.use(cors());
-app.use(express.json());
-app.use(express.json("public"));
-
-app.use("/api/auth", authRoutes);
-app.use("/api/popular-recipe", popularRecipeRoutes);
-app.use("/api/search", searchRoutes);
-app.use("/api/recipes", recipeRoutes);
+app.use("/api/auth", authRoutes)
+app.use("/api/popular-recipe", popularRecipeRoutes)
+app.use("/api/search", searchRoutes)
+app.use("/api/recipes", recipeRoutes)
 app.use("/api", ingridientRoutes)
 app.use("/api/shopping-list", shoppingListRoutes)
+app.use("/api/favorite", favoriteRoutes)
 app.use("/api", subsRoutes)
 // DOCUMENTATION
 
