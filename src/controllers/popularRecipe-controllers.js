@@ -23,6 +23,7 @@ const getPopularRecipes = async (req, res) => {
         thumb: { $first: "$thumb" },
         instructions: { $first: "$instructions" },
         description: { $first: "$description" },
+        time: { $first: "$time" },
         points: {
           $first: "$points",
         },
