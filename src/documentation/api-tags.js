@@ -17,6 +17,10 @@ const apiTags = {
       description: "Get list of available categories",
     },
     {
+      name: "Ingredient List",
+      description: "List of available ingredients",
+    },
+    {
       name: "Own Recipes",
       description: "Recipes created by user",
     },

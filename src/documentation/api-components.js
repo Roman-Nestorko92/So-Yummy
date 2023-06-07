@@ -300,25 +300,10 @@ const components = {
             example: "30",
           },
           ingredients: {
-            type: "array",
-            //   // items: {
-            //   //   type: "object",
-            //   //   properties: {
-            //   //     id: {
-            //   //       type: "string",
-            //   //       description: "id of ingredient",
-            //   //       example: "640c2dd963a319ea671e372c",
-            //   //     },
-            //   //     measure: {
-            //   //       type: "string",
-            //   //       description: "amount and measure type",
-            //   //       example: "1 spn",
-            //   //     },
-            //   //   },
-            //   // },
-            items: {
-              $ref: "#/components/schemas/IngredientRequest",
-            },
+            type: "string",
+            description:
+              "Array of objects, which includes id's and measures of ingredient",
+            example: "[{id:`56412166465`, measure:`5 spoon`}]",
           },
           instructions: {
             type: "string",
@@ -455,6 +440,27 @@ const components = {
             description: "url of image",
             example:
               "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564123/rw8pn3541bmukb8d3mio.png",
+          },
+        },
+      },
+      IngredientListResponse: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              example: "640c2dd963a319ea671e365c",
+            },
+            title: {
+              type: "string",
+              example: "Salmon",
+            },
+            thumb: {
+              type: "string",
+              example:
+                "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564123/bwzvxyjxozyankmd6ky8.png",
+            },
           },
         },
       },
