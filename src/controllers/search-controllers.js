@@ -28,10 +28,16 @@ const getSearchRecipes = async (req, res) => {
   if (recipeName) {
     searchQuery = { title: { $regex: new RegExp(recipeName, "i") } };
   }
+
   if (ingr) {
     const [data] = await Ingredient.find({
       ttl: { $regex: new RegExp(ingr, "i") },
     });
+
+    if (!data) {
+      throw HttpError(400);
+    }
+
     searchQuery = {
       ingredients: {
         $elemMatch: {
