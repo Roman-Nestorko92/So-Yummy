@@ -28,7 +28,17 @@ const patchAddfavorite = async (req, res) => {
 
 const getAllfavorite = async (req, res) => {
   const { _id: owner } = req.user;
-  const result = await Recipe.find({ favorites: { $in: [owner] } });
+  const { page = 1, limit = 4 } = req.query;
+  const skip = (page - 1) * limit;
+  if (page < 1 || limit < 1) {
+    throw HttpError(400, "Invalid page or limit value");
+  }
+
+  const result = await Recipe.find(
+    { favorites: { $in: [owner] } },
+    {},
+    { skip, limit }
+  );
 
   res.json(result);
 };

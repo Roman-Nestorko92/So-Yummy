@@ -20,6 +20,10 @@ const apiTags = {
       name: "Own Recipes",
       description: "Recipes created by user",
     },
+    {
+      name: "Favorites",
+      description: "Favorite recipes of user",
+    },
   ],
 };
 
