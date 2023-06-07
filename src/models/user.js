@@ -4,7 +4,7 @@ const Joi = require("joi");
 
 const nameRegex = /^[a-zA-Z0-9А-яЁёІіЇї\d]{1,16}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/;
-const emailRegex = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9_.]+(\.[a-zA-Z]+){1,2}$/;
+const emailRegex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.]+(\.[a-zA-Z]+){1,2}$/;
 
 const shoppingListSchema = new Schema(
   {
@@ -14,12 +14,13 @@ const shoppingListSchema = new Schema(
     },
     measure: {
       type: String,
+
       default: "",
     },
     thb: {
       type: String,
     },
-    title: {
+    ttl: {
       type: String,
     },
   },
@@ -66,7 +67,7 @@ userSchema.post("save", handleMongooseError);
 
 const userRegistrSchema = Joi.object({
   name: Joi.string().regex(nameRegex).min(1).max(16).required().messages({
-    "string.pattern.base": "Name limit: 16 letters",
+    "string.pattern.base": "Name limit: 16 letters, no spaces, no spec.symbols",
   }),
   email: Joi.string()
     .min(7)
@@ -75,7 +76,8 @@ const userRegistrSchema = Joi.object({
     .email({ maxDomainSegments: 3, tlds: { deny: ["ru"] } })
     .required()
     .messages({
-      "string.pattern.base": "min 7, max 35, only alphanum, `.`, `_` allowed",
+      "string.pattern.base":
+        "min 7, max 35, only alphanum, `.`, `_`, `-` allowed",
       "any.required": "email is required",
     }),
   password: Joi.string()
@@ -91,12 +93,6 @@ const userRegistrSchema = Joi.object({
         "Password must have at least 6 characters, only alpanum, 1 upper case, 1 lower case and 1 digit",
     }),
 });
-
-// const userEmailSchema = Joi.object({
-//   email: Joi.string().regex(emailRegex).required().messages({
-//     "string.pattern.base": "Email must be valid",
-//   }),
-// });
 
 const userLoginSchema = Joi.object({
   email: Joi.string()
@@ -121,11 +117,18 @@ const userUpdateSchema = Joi.object({
   avatar: Joi.any(),
 });
 
+const userShoppingListSchema = Joi.object({
+  _id: Joi.string().required(),
+  measure: Joi.string().required(),
+  ttl: Joi.string().required(),
+  thb: Joi.string().required(),
+});
+
 const schemas = {
   userRegistrSchema,
-  // userEmailSchema,
   userLoginSchema,
   userUpdateSchema,
+  userShoppingListSchema,
 };
 
 const User = model("user", userSchema);

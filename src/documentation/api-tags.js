@@ -32,6 +32,14 @@ const apiTags = {
       name: "Search",
       description: "Search recipes by ingredients and by name",
     },
+    {
+      name: "Shopping List",
+      description: "List of products, which user want to buy",
+    },
+    {
+      name: "Popular Recipes",
+      description: "List of recipes sorted by popularity",
+    },
   ],
 };
 

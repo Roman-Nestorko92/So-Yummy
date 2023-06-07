@@ -1,3 +1,5 @@
+const { object } = require("joi");
+
 const components = {
   components: {
     schemas: {
@@ -748,6 +750,124 @@ const components = {
             type: "array",
             items: {
               $ref: "#/components/schemas/IngredientResponse",
+            },
+          },
+        },
+      },
+      ItemToBuy: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            example: "647ae6aae9cfb5491c1d9c19",
+          },
+          measure: {
+            type: "string",
+            example: "300g",
+          },
+          ttl: {
+            type: "string",
+            example: "Chicken",
+          },
+          thb: {
+            type: "string",
+            example:
+              "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564123/rw8pn3541bmukb8d3mio.png",
+          },
+        },
+      },
+      AddItemtoBuy: {
+        type: "object",
+        properties: {
+          _id: {
+            type: "string",
+            example: "647ae6aae9cfb5491c1d9c19",
+          },
+          measure: {
+            type: "string",
+            example: "300g",
+          },
+          ttl: {
+            type: "string",
+            example: "Chicken",
+          },
+          thb: {
+            type: "string",
+            example:
+              "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564123/rw8pn3541bmukb8d3mio.png",
+          },
+        },
+      },
+      ShoppingListResponse: {
+        type: "object",
+        properties: {
+          _id: {
+            type: "string",
+            description: "user's Id",
+            example: "647ae6aae9cfb5491c1d9c19",
+          },
+          shoppingList: {
+            type: "array",
+            items: { $ref: "#/components/schemas/ItemToBuy" },
+          },
+        },
+      },
+      DeleteItemtoBuy: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "ID of item to delete",
+            example: "6480dfde2aea54c3a4c06952",
+          },
+        },
+      },
+      PopularRecipesResponse: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              description: "Id of the recipe",
+              example: "647c86459fec93f88e9aaa28",
+            },
+            title: {
+              type: "string",
+              description: "title of recipe",
+              example: "Pizza",
+            },
+            description: {
+              type: "string",
+              description: "Brief description of dish",
+              example: "Italian cuisine",
+            },
+            instructions: {
+              type: "string",
+              description: "Instruction regarding procedures",
+              example: "Bake 30 minutes",
+            },
+            preview: {
+              type: "string",
+              description: "url of image ( if it not provided - empty string",
+              example:
+                "http://res.cloudinary.com/dcxlayslv/image/upload/v1/ownrecipe/khzieh9fkxkrvyitgxa3",
+            },
+            thumb: {
+              type: "string",
+              description: "Url of large image ",
+              example:
+                "https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg",
+            },
+            time: {
+              type: "string",
+              description: "time of cooking",
+              example: "30",
+            },
+            point: {
+              type: "integer",
+              description: "Rating of popularity",
+              example: 30,
             },
           },
         },
