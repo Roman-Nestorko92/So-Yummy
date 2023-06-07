@@ -35,7 +35,7 @@ const getSearchRecipes = async (req, res) => {
     });
 
     if (!data) {
-      throw HttpError(400);
+      throw HttpError(404);
     }
 
     searchQuery = {
@@ -58,6 +58,10 @@ const getSearchRecipes = async (req, res) => {
       $limit: Number(limit),
     },
   ]);
+
+  if (result.length === 0) {
+    throw HttpError(404);
+  }
 
   res.status(200).json(result);
 };
