@@ -24,6 +24,10 @@ const apiTags = {
       name: "Favorites",
       description: "Favorite recipes of user",
     },
+    {
+      name: "Search",
+      description: "Search recipes by ingredients and by name",
+    },
   ],
 };
 

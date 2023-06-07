@@ -635,11 +635,17 @@ const components = {
             },
             favorites: {
               type: "array",
-              description: "array of ID's",
+              items: {
+                type: "string",
+                description: "array of ID's",
+              },
             },
             likes: {
               type: "array",
-              description: "array of ID's",
+              items: {
+                type: "string",
+                description: "array of ID's",
+              },
             },
             youtube: {
               type: "string",
@@ -713,11 +719,17 @@ const components = {
           },
           favorites: {
             type: "array",
-            description: "array of ID's",
+            items: {
+              type: "string",
+              description: "array of ID's",
+            },
           },
           likes: {
             type: "array",
-            description: "array of ID's",
+            items: {
+              type: "string",
+              description: "array of ID's",
+            },
           },
           youtube: {
             type: "string",
