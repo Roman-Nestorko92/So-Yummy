@@ -6,7 +6,7 @@ const gravatar = require("gravatar");
 
 const { User } = require("../models/user");
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL } = process.env;
+// const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_URL } = process.env;
 
 const googleParams = {
   clientID: `182102382272-ojfks0sf3i72du60oe9cdvp8rtkl7kc1.apps.googleusercontent.com`,
