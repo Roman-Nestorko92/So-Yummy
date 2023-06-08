@@ -87,13 +87,13 @@ const deleteOwnRecipe = async (req, res) => {
       `Recipe with id "${req.params.ownRecipeId}" is missing`
     );
   }
-  res.status(204);
+  res.status(204).send();
 };
 
 const getOwnRecipeById = async (req, res) => {
   const { ownRecipeId } = req.params;
 
-  const data = await ownRecipeServise({ ownRecipeId });
+  const [data] = await ownRecipeServise({ ownRecipeId });
 
   res.json(data);
 };

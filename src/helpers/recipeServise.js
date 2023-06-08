@@ -17,7 +17,13 @@ const piplineOneRecipe = (id) => {
         as: "ingridientInfo",
       },
     },
-
+    {
+      $project: {
+        updatedAt: 0,
+        createdAt: 0,
+        owner: 0,
+      },
+    },
     {
       $set: {
         ingredients: {

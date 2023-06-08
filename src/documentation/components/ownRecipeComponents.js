@@ -115,7 +115,7 @@ const ownRecipeComponents = {
     items: {
       type: "object",
       properties: {
-        id: {
+        _id: {
           type: "string",
           description: "Id of the recipe",
           example: "647c86459fec93f88e9aaa28",
@@ -145,52 +145,49 @@ const ownRecipeComponents = {
     },
   },
   GetOwnRecipeByIDResponse: {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-          description: "Id of the recipe",
-          example: "647c86459fec93f88e9aaa28",
+    type: "object",
+    properties: {
+      _id: {
+        type: "string",
+        description: "Id of the recipe",
+        example: "647c86459fec93f88e9aaa28",
+      },
+      title: {
+        type: "string",
+        description: "title of recipe",
+        example: "Pizza",
+      },
+      description: {
+        type: "string",
+        description: "Brief description of dish",
+        example: "Italian cuisine",
+      },
+      category: {
+        type: "string",
+        description: "Category of dish",
+        example: "Miscellaneous",
+      },
+      time: {
+        type: "string",
+        description: "time of cooking",
+        example: "30",
+      },
+      ingredients: {
+        type: "array",
+        items: {
+          $ref: "#/components/schemas/IngredientResponse",
         },
-        title: {
-          type: "string",
-          description: "title of recipe",
-          example: "Pizza",
-        },
-        description: {
-          type: "string",
-          description: "Brief description of dish",
-          example: "Italian cuisine",
-        },
-        category: {
-          type: "string",
-          description: "Category of dish",
-          example: "Miscellaneous",
-        },
-        time: {
-          type: "string",
-          description: "time of cooking",
-          example: "30",
-        },
-        ingredients: {
-          type: "array",
-          items: {
-            $ref: "#/components/schemas/IngredientResponse",
-          },
-        },
-        instructions: {
-          type: "string",
-          description: "Instruction regarding procedures",
-          example: "Bake 30 minutes",
-        },
-        preview: {
-          type: "string",
-          description: "url of image ( if it not provided - empty string",
-          example:
-            "http://res.cloudinary.com/dcxlayslv/image/upload/v1/ownrecipe/khzieh9fkxkrvyitgxa3",
-        },
+      },
+      instructions: {
+        type: "string",
+        description: "Instruction regarding procedures",
+        example: "Bake 30 minutes",
+      },
+      preview: {
+        type: "string",
+        description: "url of image ( if it not provided - empty string",
+        example:
+          "http://res.cloudinary.com/dcxlayslv/image/upload/v1/ownrecipe/khzieh9fkxkrvyitgxa3",
       },
     },
   },
