@@ -7,7 +7,7 @@ const gravatar = require("gravatar");
 const path = require("path");
 
 const { cloudinary } = require("../utils");
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, FRONTEND_URL } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -66,7 +66,7 @@ const login = async (req, res) => {
   res.json({
     token,
     user: {
-      email: user.email,
+      name: user.name,
       email: user.email,
       avatarURL: user.avatarURL,
     },
@@ -121,10 +121,25 @@ const updateUser = async (req, res) => {
   });
 };
 
+const googleAuth = async (req, res) => {
+  const { _id: id, name, email, avatarURL } = req.user;
+
+  const payload = {
+    id,
+  };
+
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  await User.findByIdAndUpdate(id, { token });
+  res.redirect(
+    `https://vazhavazh.github.io/so_yummy?token=${token}&name=${name}&email=${email}&avatarURL=${avatarURL}`
+  );
+};
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
   updateUser: ctrlWrapper(updateUser),
+  googleAuth,
 };

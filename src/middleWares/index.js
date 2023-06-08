@@ -4,6 +4,7 @@ const { uploadRecipe, uploadAvatar } = require("./upload");
 const optimizeBody = require("./optimizeBody");
 const isValidCategory = require("./validateCategory");
 const isValidIdRecipe = require("./isValidIdRecipe");
+const passport = require("./google-authentificate");
 
 module.exports = {
   isValidId,
@@ -13,4 +14,5 @@ module.exports = {
   optimizeBody,
   isValidCategory,
   isValidIdRecipe,
+  passport,
 };
