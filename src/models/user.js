@@ -52,7 +52,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: true,
+      // required: true,
     },
     subscription: {
       type: Boolean,

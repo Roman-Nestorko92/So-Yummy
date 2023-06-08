@@ -3,7 +3,18 @@ const router = express.Router();
 const authControllers = require("../../controllers/auth-controllers");
 const { schemas } = require("../../models/user");
 const { validateBody } = require("../../utils");
-const { authentificate, uploadAvatar } = require("../../middleWares");
+const { authentificate, uploadAvatar, passport } = require("../../middleWares");
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  authControllers.googleAuth
+);
 
 router.post(
   "/register",
