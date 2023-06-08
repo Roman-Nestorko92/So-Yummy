@@ -1,38 +1,38 @@
-const { ctrlWrapper } = require("../utils");
-const { HttpError } = require("../helpers");
-const { User } = require("../models/user");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const gravatar = require("gravatar");
-const path = require("path");
+const { ctrlWrapper } = require("../utils")
+const { HttpError } = require("../helpers")
+const { User } = require("../models/user")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+const gravatar = require("gravatar")
+const path = require("path")
 
-const { cloudinary } = require("../utils");
-const { SECRET_KEY, FRONTEND_URL } = process.env;
+const { cloudinary } = require("../utils")
+const { SECRET_KEY, FRONTEND_URL } = process.env
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { email, password } = req.body
+  const user = await User.findOne({ email })
   if (user) {
-    throw HttpError(409, "User with such Email already exist");
+    throw HttpError(409, "User with such Email already exist")
   }
 
-  const hashPassword = await bcrypt.hash(password, 10);
-  const avatarURL = gravatar.url(email);
+  const hashPassword = await bcrypt.hash(password, 10)
+  const avatarURL = gravatar.url(email)
 
   await User.create({
     ...req.body,
     password: hashPassword,
     avatarURL,
-  });
+  })
 
-  const currentUser = await User.findOne({ email });
-  const { _id: id } = currentUser;
+  const currentUser = await User.findOne({ email })
+  const { _id: id } = currentUser
   const payload = {
     id: currentUser._id,
-  };
+  }
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-  await User.findByIdAndUpdate(id, { token });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" })
+  await User.findByIdAndUpdate(id, { token })
   res.status(201).json({
     token,
     user: {
@@ -40,29 +40,29 @@ const register = async (req, res) => {
       email: currentUser.email,
       avatarURL: currentUser.avatarURL,
     },
-  });
-};
+  })
+}
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const { email, password } = req.body
+  const user = await User.findOne({ email })
   if (!user) {
-    throw HttpError(401);
+    throw HttpError(401)
   }
 
-  const passwordCompare = await bcrypt.compare(password, user.password);
+  const passwordCompare = await bcrypt.compare(password, user.password)
   if (!passwordCompare) {
-    throw HttpError(401);
+    throw HttpError(401)
   }
 
-  const { _id: id } = user;
+  const { _id: id } = user
 
   const payload = {
     id: user._id,
-  };
+  }
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-  await User.findByIdAndUpdate(id, { token });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" })
+  await User.findByIdAndUpdate(id, { token })
   res.json({
     token,
     user: {
@@ -70,11 +70,11 @@ const login = async (req, res) => {
       email: user.email,
       avatarURL: user.avatarURL,
     },
-  });
-};
+  })
+}
 
 const getCurrent = async (req, res) => {
-  const { name, email, avatarURL } = req.user;
+  const { name, email, avatarURL } = req.user
 
   res.json({
     user: {
@@ -82,58 +82,58 @@ const getCurrent = async (req, res) => {
       email,
       avatarURL,
     },
-  });
-};
+  })
+}
 
 const logout = async (req, res) => {
-  const { _id } = req.user;
-  await User.findByIdAndUpdate(_id, { token: "" });
+  const { _id } = req.user
+  await User.findByIdAndUpdate(_id, { token: "" })
 
   res.json({
     message: "Logout success",
-  });
-};
+  })
+}
 
 const updateUser = async (req, res) => {
-  const { name } = req.body;
+  const { name } = req.body
   if (!name && !req.file) {
-    throw HttpError(400, "Provide all necessary fields");
+    throw HttpError(400, "Provide all necessary fields")
   }
 
   if (name) {
-    req.user.name = name;
+    req.user.name = name
   }
 
   if (req.file) {
-    const imageUrl = cloudinary.url(req.file.filename);
-    req.user.avatarURL = imageUrl;
+    const imageUrl = cloudinary.url(req.file.filename)
+    req.user.avatarURL = imageUrl
   }
 
   const data = {
     name: req.user.name,
     avatarURL: req.user.avatarURL,
-  };
+  }
 
-  await User.findByIdAndUpdate(req.user._id, data);
+  await User.findByIdAndUpdate(req.user._id, data)
 
   res.json({
     data,
-  });
-};
+  })
+}
 
 const googleAuth = async (req, res) => {
-  const { _id: id, name, email, avatarURL } = req.user;
+  const { _id: id, name, email, avatarURL } = req.user
 
   const payload = {
     id,
-  };
+  }
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-  await User.findByIdAndUpdate(id, { token });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" })
+  await User.findByIdAndUpdate(id, { token })
   res.redirect(
-    `https://vazhavazh.github.io/so_yummy?token=${token}&name=${name}&email=${email}&avatarURL=${avatarURL}`
-  );
-};
+    `${FRONTEND_URL}?token=${token}&name=${name}&email=${email}&avatarURL=${avatarURL}`
+  )
+}
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -142,4 +142,4 @@ module.exports = {
   logout: ctrlWrapper(logout),
   updateUser: ctrlWrapper(updateUser),
   googleAuth,
-};
+}
