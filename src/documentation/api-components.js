@@ -1,5 +1,3 @@
-const { object } = require("joi");
-
 const components = {
   components: {
     schemas: {
