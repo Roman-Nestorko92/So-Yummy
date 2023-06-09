@@ -16,17 +16,6 @@ const optimizeRequest = (req, res, next) => {
     }
   }
 
-  // if (req.query.ingredient) {
-  //   const { ingredient } = req.query;
-
-  //   const arrOfWords = ingredient.split(" ");
-
-  //   // Yes, we know that this is mutation but we have no choice
-  //   req.query.ingredient = arrOfWords
-  //     .map((word) => word[0].toUpperCase() + word.slice(1))
-  //     .join(" ");
-  // }
-
   next();
 };
 

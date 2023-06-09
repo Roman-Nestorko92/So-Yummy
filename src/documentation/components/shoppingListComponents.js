@@ -2,7 +2,7 @@ const shoppingListComponents = {
   ItemToBuy: {
     type: "object",
     properties: {
-      id: {
+      _id: {
         type: "string",
         example: "647ae6aae9cfb5491c1d9c19",
       },
@@ -60,7 +60,7 @@ const shoppingListComponents = {
   DeleteItemtoBuy: {
     type: "object",
     properties: {
-      id: {
+      _id: {
         type: "string",
         description: "ID of item to delete",
         example: "6480dfde2aea54c3a4c06952",
