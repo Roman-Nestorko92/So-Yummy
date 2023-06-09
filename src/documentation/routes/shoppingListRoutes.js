@@ -64,7 +64,7 @@ const shoppingListRoutes = {
         },
       },
       responses: {
-        200: {
+        201: {
           description: "Success",
           content: {
             "application/json": {

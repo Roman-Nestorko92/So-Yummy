@@ -8,7 +8,7 @@ const emailRegex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.]+(\.[a-zA-Z]+){1,2}$/;
 
 const shoppingListSchema = new Schema(
   {
-    id: {
+    _id: {
       type: String,
       required: true,
     },

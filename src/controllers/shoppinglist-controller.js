@@ -9,35 +9,35 @@ const postAddProducts = async (req, res) => {
   if (!_id || !measure || !ttl || !thb) {
     throw HttpError(400, "Require `_id, measure, ttl, thb` fields");
   }
-  const result = await User.findByIdAndUpdate(
+  const { shoppingList } = await User.findByIdAndUpdate(
     userId,
     {
       $push: {
-        shoppingList: { ...req.body, id: new ObjectId() },
+        shoppingList: { ...req.body, _id: new ObjectId() },
       },
     },
     { new: true }
   );
 
-  res.status(201).json(result.shoppingList);
+  res.status(201).json(shoppingList[shoppingList.length - 1]);
 };
 
 const deleteProducts = async (req, res) => {
   const { _id } = req.user;
-  const { id } = req.body;
+  const { _id: ingrId } = req.body;
 
   const [list] = await User.find({ _id });
 
-  const checkId = list.shoppingList.find((item) => item.id === id);
+  const checkId = list.shoppingList.find((item) => item._id === ingrId);
 
   if (list.shoppingList.length === 0 || !checkId) {
-    throw HttpError(404, `Product with id=${id} is not found`);
+    throw HttpError(404, `Product with _id=${ingrId} is not found`);
   }
 
-  const result = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     _id,
     {
-      $pull: { shoppingList: { id } },
+      $pull: { shoppingList: { _id: ingrId } },
     },
     { new: true }
   );
