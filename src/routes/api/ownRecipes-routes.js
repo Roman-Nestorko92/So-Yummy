@@ -8,7 +8,7 @@ const {
   authentificate,
   uploadRecipe,
   isValidId,
-  optimizeBody,
+  optimizeRequest,
   isValidIdRecipe,
 } = require("../../middleWares");
 
@@ -16,7 +16,7 @@ router.post(
   "/",
   authentificate,
   uploadRecipe.single("preview"),
-  optimizeBody,
+  optimizeRequest,
   validateBody(ownRecipesAddSchema),
   ownRecipesControllers.addOwnRecipe
 );

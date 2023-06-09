@@ -1,7 +1,7 @@
 const isValidId = require("./isValid");
 const authentificate = require("./authentificate");
 const { uploadRecipe, uploadAvatar } = require("./upload");
-const optimizeBody = require("./optimizeBody");
+const optimizeRequest = require("./optimizeRequest");
 const isValidCategory = require("./validateCategory");
 const isValidIdRecipe = require("./isValidIdRecipe");
 const passport = require("./google-authentificate");
@@ -11,7 +11,7 @@ module.exports = {
   authentificate,
   uploadRecipe,
   uploadAvatar,
-  optimizeBody,
+  optimizeRequest,
   isValidCategory,
   isValidIdRecipe,
   passport,

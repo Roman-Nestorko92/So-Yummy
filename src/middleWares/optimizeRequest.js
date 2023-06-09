@@ -1,6 +1,6 @@
 const { capitalizeString } = require("../helpers");
 
-const optimizeBody = (req, res, next) => {
+const optimizeRequest = (req, res, next) => {
   if (req.params.category) {
     req.params.category = capitalizeString(req.params.category);
   }
@@ -30,4 +30,4 @@ const optimizeBody = (req, res, next) => {
   next();
 };
 
-module.exports = optimizeBody;
+module.exports = optimizeRequest;
