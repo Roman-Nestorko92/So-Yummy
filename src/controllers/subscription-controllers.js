@@ -1,3 +1,5 @@
+const { isValidObjectId } = require("mongoose");
+
 const { ctrlWrapper } = require("../utils");
 const { HttpError } = require("../helpers");
 const createMessage = require("../helpers/emailTemplates/subscriptionEmail");
@@ -40,9 +42,8 @@ const subscription = async (req, res) => {
 
 const unSubscribtion = async (req, res) => {
   const { id: _id } = req.params;
-
-  if (!_id) {
-    throw HttpError(404, "id should be valid");
+  if (!isValidObjectId(_id)) {
+    throw HttpError(404, `${_id} is not valid id`);
   }
   const check = await Subscription.findOne({ _id });
   if (!check) {
