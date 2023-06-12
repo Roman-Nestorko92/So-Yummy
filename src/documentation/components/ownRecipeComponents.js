@@ -35,7 +35,7 @@ const ownRecipeComponents = {
         type: "string",
         description:
           "Array of objects, which includes id's and measures of ingredient",
-        example: "[{id:`56412166465`, measure:`5 spoon`}]",
+        example: `[{"id":"640c2dd963a319ea671e365b", "measure":"5 spoon"}]`,
       },
       instructions: {
         type: "string",

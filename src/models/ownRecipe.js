@@ -2,32 +2,6 @@ const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../utils");
 const Joi = require("joi");
 
-// const Category = require("./category");
-// let categoryList = [];
-
-// const getCategoryList = async () => {
-//   const { categories } = await Category.aggregate([
-//     {
-//       $addFields: {
-//         categories: {
-//           $push: {"$categories.category"},
-//         },
-//       },
-//     },
-//     {
-//       $project: {
-//         _id: 0,
-//         category: 0,
-//         categories: 1,
-//       },
-//     },
-//   ]);
-
-//   return categories;
-// };
-
-// console.log(getCategoryList());
-
 const categoryList = [
   "Beef",
   "Breakfast",
