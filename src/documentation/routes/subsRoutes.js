@@ -39,9 +39,10 @@ const subsRoutes = {
     },
   },
   "/api/subscribe/{id}": {
-    get: {
+    delete: {
       tags: ["Subscribe"],
       summary: "Unubscribtion user on a newsletter",
+      security: [{ Bearer: [] }],
       parameters: [
         { in: "path", name: "id", required: "true", type: "string" },
       ],

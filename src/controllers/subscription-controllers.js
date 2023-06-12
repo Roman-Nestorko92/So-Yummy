@@ -46,9 +46,7 @@ const unSubscribtion = async (req, res) => {
   }
   await Subscription.findOneAndRemove({ _id });
 
-  res.json({
-    message: "Unsubscribed",
-  });
+  res.status(204).send();
 };
 
 module.exports = {
