@@ -1,4 +1,4 @@
-const { BASE_URL } = process.env;
+const { FRONTEND_URL } = process.env;
 
 const createMessage = (name, id) => {
   return `<div style="max-width: 400px; margin: 0 auto; text-align: center;">
@@ -12,7 +12,7 @@ const createMessage = (name, id) => {
     <p style="margin-top: 15px; text-align: center;">Thanks for subscription,<br>
     The SoYummy team</p>
      </div>
-     <p style="font-size: 8px" color: #D3D3D3;">If don't want to recieve our newsletters, <a href="${BASE_URL}/api/subscribe/${id}">click here</a></p>
+     <p style="font-size: 8px" color: #D3D3D3;">If don't want to recieve our newsletters, <a href="${FRONTEND_URL}/unsubscription?_id=${id}">click here</a></p>
     `;
 };
 

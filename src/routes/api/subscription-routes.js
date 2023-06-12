@@ -6,7 +6,7 @@ const {
 } = require("../../controllers/subscription-controllers");
 const { userEmailSchema } = require("../../models/subscription");
 const { validateBody } = require("../../utils");
-const { authentificate, isValidId } = require("../../middleWares");
+const { authentificate } = require("../../middleWares");
 
 router.post(
   "/subscribe",
@@ -15,6 +15,6 @@ router.post(
   subscription
 );
 
-router.get("/subscribe/:id", isValidId, unSubscribtion);
+router.delete("/subscribe/:id", authentificate, unSubscribtion);
 
 module.exports = router;
