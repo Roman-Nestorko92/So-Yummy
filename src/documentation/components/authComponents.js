@@ -29,6 +29,11 @@ const authComponents = {
         example: "string",
       },
       user: {
+        _id: {
+          type: "6478cd5a5a032b9b39bd7dab",
+          description: "User's ID",
+          example: "User's ID string",
+        },
         name: {
           type: "string",
           description: "User's name",
@@ -48,6 +53,7 @@ const authComponents = {
     example: {
       token: "string",
       user: {
+        _id: "6478cd5a5a032b9b39bd7dab",
         name: "testUser",
         email: "user@example.com",
         avatarURL: "url for avatar",
@@ -79,12 +85,16 @@ const authComponents = {
         example: "string",
       },
       user: {
+        _id: {
+          type: "6478cd5a5a032b9b39bd7dab",
+          description: "User's ID",
+          example: "User's ID string",
+        },
         name: {
           type: "string",
           description: "User's name",
           example: "testUser",
         },
-
         email: {
           type: "string",
           description: "User's email",
@@ -99,6 +109,7 @@ const authComponents = {
     example: {
       token: "string",
       user: {
+        _id: "6478cd5a5a032b9b39bd7dab",
         name: "testUser",
         email: "user@example.com",
         avatarURL: "URL for avatar",
@@ -109,12 +120,16 @@ const authComponents = {
     type: "object",
     properties: {
       user: {
+        _id: {
+          type: "6478cd5a5a032b9b39bd7dab",
+          description: "User's ID",
+          example: "User's ID string",
+        },
         name: {
           type: "string",
           description: "User's name",
           example: "testUser",
         },
-
         email: {
           type: "string",
           description: "User's email",
@@ -128,6 +143,7 @@ const authComponents = {
     },
     example: {
       user: {
+        _id: "6478cd5a5a032b9b39bd7dab",
         name: "testUser",
         email: "user@example.com",
         avatarURL: "URL for avatar",

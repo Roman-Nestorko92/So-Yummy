@@ -51,7 +51,7 @@ const subsRoutes = {
           description: "Unsubscribed",
         },
         404: {
-          description: "This user is not subsribed",
+          description: "This user is not subsribed / ID is not valid `",
         },
         500: { description: "Server error" },
       },
