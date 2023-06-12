@@ -12,7 +12,7 @@ const createMessage = (name, id) => {
     <p style="margin-top: 15px; text-align: center;">Thanks for subscription,<br>
     The SoYummy team</p>
      </div>
-     <p style="font-size: 8px" color: #D3D3D3;">If don't want to recieve our newsletters, <a href="${FRONTEND_URL}}/unsubscription/${id}">click here</a></p>
+     <p style="font-size: 8px" color: #D3D3D3;">If don't want to recieve our newsletters, <a href="${FRONTEND_URL}/unsubscription/${id}">click here</a></p>
     `;
 };
 
