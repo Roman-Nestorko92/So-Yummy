@@ -31,7 +31,7 @@ const register = async (req, res) => {
     id: currentUser._id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "48h" });
   await User.findByIdAndUpdate(id, { token });
   res.status(201).json({
     token,
@@ -62,7 +62,7 @@ const login = async (req, res) => {
     id: user._id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "48h" });
   await User.findByIdAndUpdate(id, { token });
   res.json({
     token,
@@ -131,10 +131,10 @@ const googleAuth = async (req, res) => {
     id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "48h" });
   await User.findByIdAndUpdate(id, { token });
   res.redirect(
-    `${FRONTEND_URL}?token=${token}&name=${name}&email=${email}&avatarURL=${avatarURL}&_id=${_id}`
+    `${FRONTEND_URL}?token=${token}&name=${name}&email=${email}&avatarURL=${avatarURL}&_id=${id}`
   );
 };
 
