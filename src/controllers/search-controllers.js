@@ -11,6 +11,7 @@ const getSearchRecipes = async (req, res) => {
     page = 1,
     limit = 12,
   } = req.query;
+  const { _id } = req.user;
 
   let searchQuery = "";
 
@@ -47,7 +48,15 @@ const getSearchRecipes = async (req, res) => {
     };
   }
 
-  const result = await Recipe.aggregate([
+  const allData = await Recipe.aggregate([
+    {
+      $match: searchQuery,
+    },
+  ]);
+
+  const totalPages = Math.ceil(allData.length / limit);
+
+  const data = await Recipe.aggregate([
     {
       $match: searchQuery,
     },
@@ -59,11 +68,11 @@ const getSearchRecipes = async (req, res) => {
     },
   ]);
 
-  if (result.length === 0) {
+  if (data.length === 0) {
     throw HttpError(404);
   }
 
-  res.status(200).json(result);
+  res.status(200).json({ totalPages, data });
 };
 
 module.exports = {

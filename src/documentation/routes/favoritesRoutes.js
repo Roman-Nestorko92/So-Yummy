@@ -32,7 +32,7 @@ const favoritesRoutes = {
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/RecibeByIdResponse",
+                $ref: "#/components/schemas/GetFavoriteResponse",
               },
             },
           },

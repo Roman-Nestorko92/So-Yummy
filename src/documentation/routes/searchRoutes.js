@@ -52,9 +52,18 @@ const searchRoutes = {
           content: {
             "application/json": {
               schema: {
-                type: "array",
-                items: {
-                  $ref: "#/components/schemas/ToggleFavoriteResponse",
+                type: "object",
+                properties: {
+                  totalPages: {
+                    type: "integer",
+                    example: 2,
+                  },
+                  data: {
+                    type: "array",
+                    items: {
+                      $ref: "#/components/schemas/ToggleFavoriteResponse",
+                    },
+                  },
                 },
               },
             },

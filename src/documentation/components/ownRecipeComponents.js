@@ -111,35 +111,44 @@ const ownRecipeComponents = {
     },
   },
   GetOwnRecipeResponse: {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        _id: {
-          type: "string",
-          description: "Id of the recipe",
-          example: "647c86459fec93f88e9aaa28",
-        },
-        title: {
-          type: "string",
-          description: "title of recipe",
-          example: "Pizza",
-        },
-        description: {
-          type: "string",
-          description: "Brief description of dish",
-          example: "Italian cuisine",
-        },
-        time: {
-          type: "string",
-          description: "time of cooking",
-          example: "30",
-        },
-        preview: {
-          type: "string",
-          description: "url of image ( if it not provided - empty string",
-          example:
-            "http://res.cloudinary.com/dcxlayslv/image/upload/v1/ownrecipe/khzieh9fkxkrvyitgxa3",
+    type: "object",
+    properties: {
+      totalPages: {
+        type: "integer",
+        example: 2,
+      },
+      data: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              description: "Id of the recipe",
+              example: "647c86459fec93f88e9aaa28",
+            },
+            title: {
+              type: "string",
+              description: "title of recipe",
+              example: "Pizza",
+            },
+            description: {
+              type: "string",
+              description: "Brief description of dish",
+              example: "Italian cuisine",
+            },
+            time: {
+              type: "string",
+              description: "time of cooking",
+              example: "30",
+            },
+            preview: {
+              type: "string",
+              description: "url of image ( if it not provided - empty string",
+              example:
+                "http://res.cloudinary.com/dcxlayslv/image/upload/v1/ownrecipe/khzieh9fkxkrvyitgxa3",
+            },
+          },
         },
       },
     },
