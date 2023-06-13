@@ -2,7 +2,9 @@ const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../utils");
 
 const categorySchema = new Schema({
-  categories: String,
+
+  category: String,
+
 });
 categorySchema.post("save", handleMongooseError);
 

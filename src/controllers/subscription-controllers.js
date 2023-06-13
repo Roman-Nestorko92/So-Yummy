@@ -40,15 +40,17 @@ const subscription = async (req, res) => {
 
 const unSubscribtion = async (req, res) => {
   const { id: _id } = req.params;
+
+  if (!_id) {
+    throw HttpError(404, "id should be valid");
+  }
   const check = await Subscription.findOne({ _id });
   if (!check) {
     throw HttpError(404, "This user is not subsribed");
   }
   await Subscription.findOneAndRemove({ _id });
 
-  res.json({
-    message: "Unsubscribed",
-  });
+  res.status(204).send();
 };
 
 module.exports = {
