@@ -134,7 +134,7 @@ const googleAuth = async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   await User.findByIdAndUpdate(id, { token });
   res.redirect(
-    `${FRONTEND_URL}?token=${token}&name=${name}&email=${email}&avatarURL=${avatarURL}&_id=${_id}`
+    `${FRONTEND_URL}?token=${token}&name=${name}&email=${email}&avatarURL=${avatarURL}&_id=${id}`
   );
 };
 
