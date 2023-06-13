@@ -44,12 +44,15 @@ const addOwnRecipe = async (req, res) => {
 
 const getOwnRecipes = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 4 } = req.query;
+  const { page = 1, limit = 8 } = req.query;
   if (page < 1 || limit < 1) {
     throw HttpError(400, "Invalid page or limit value");
   }
 
   const skip = (page - 1) * limit;
+  const allData = await OwnRecipe.find({ owner });
+
+  const totalPages = Math.ceil(allData.length / limit);
 
   const data = await OwnRecipe.aggregate([
     {
@@ -74,7 +77,7 @@ const getOwnRecipes = async (req, res) => {
     },
   ]);
 
-  res.json(data);
+  res.json({ totalPages, data });
 };
 const deleteOwnRecipe = async (req, res) => {
   const deletedRecipe = await OwnRecipe.findByIdAndRemove(

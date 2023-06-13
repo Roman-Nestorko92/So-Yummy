@@ -52,7 +52,18 @@ const getAllProducts = async (req, res) => {
   if (page < 1 || limit < 1) {
     throw HttpError(400, "Invalid page or limit value");
   }
-  const [result] = await User.aggregate([
+
+  const [allData] = await User.aggregate([
+    {
+      $match: {
+        _id: _id,
+      },
+    },
+  ]);
+
+  const totalPages = Math.ceil(allData.shoppingList.length / limit);
+
+  const [data] = await User.aggregate([
     {
       $match: {
         _id: _id,
@@ -69,7 +80,7 @@ const getAllProducts = async (req, res) => {
     },
   ]);
 
-  res.json(result);
+  res.json({ totalPages, data });
 };
 
 module.exports = {

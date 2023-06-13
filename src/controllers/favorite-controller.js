@@ -33,14 +33,17 @@ const getAllfavorite = async (req, res) => {
   if (page < 1 || limit < 1) {
     throw HttpError(400, "Invalid page or limit value");
   }
+  const allData = await Recipe.find({ favorites: { $in: [owner] } }, {});
 
-  const result = await Recipe.find(
+  const totalPages = Math.ceil(allData.length / limit);
+
+  const data = await Recipe.find(
     { favorites: { $in: [owner] } },
     {},
     { skip, limit }
   );
 
-  res.json(result);
+  res.json({ totalPages, data });
 };
 
 module.exports = {

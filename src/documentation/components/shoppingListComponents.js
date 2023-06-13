@@ -46,14 +46,23 @@ const shoppingListComponents = {
   ShoppingListResponse: {
     type: "object",
     properties: {
-      _id: {
-        type: "string",
-        description: "user's Id",
-        example: "647ae6aae9cfb5491c1d9c19",
+      totalPages: {
+        type: "integer",
+        example: 2,
       },
-      shoppingList: {
-        type: "array",
-        items: { $ref: "#/components/schemas/ItemToBuy" },
+      data: {
+        type: "object",
+        properties: {
+          _id: {
+            type: "string",
+            description: "user's Id",
+            example: "647ae6aae9cfb5491c1d9c19",
+          },
+          shoppingList: {
+            type: "array",
+            items: { $ref: "#/components/schemas/ItemToBuy" },
+          },
+        },
       },
     },
   },
