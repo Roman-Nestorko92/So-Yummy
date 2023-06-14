@@ -43,13 +43,13 @@ const subscription = async (req, res) => {
 const unSubscribtion = async (req, res) => {
   const { id: _id } = req.params;
   if (!isValidObjectId(_id)) {
-    throw HttpError(404, `${_id} is not valid id`);
+    throw HttpError(400, `${_id} is not valid id`);
   }
-  const check = await Subscription.findOne({ _id });
+  const check = await Subscription.findOne({ subscriberId: _id });
   if (!check) {
     throw HttpError(404, "This user is not subsribed");
   }
-  await Subscription.findOneAndRemove({ _id });
+  await Subscription.findOneAndRemove({ subscriberId: _id });
 
   res.status(204).send();
 };
