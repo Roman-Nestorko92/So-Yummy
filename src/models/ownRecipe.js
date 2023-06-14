@@ -92,7 +92,7 @@ const ownRecipesAddSchema = Joi.object({
     "string.max": "30 characters length max",
     "any.required": "Title is required field",
   }),
-  description: Joi.string().max(70).required().messages({
+  description: Joi.string().max(70).messages({
     "string.max": "70 characters length max",
     "any.required": "Description is required field",
   }),
@@ -108,7 +108,7 @@ const ownRecipesAddSchema = Joi.object({
   preview: Joi.any(),
   instructions: Joi.string().max(400).required().messages({
     "string.max": "400 characters length max",
-    "any.required": "Description is required field",
+    "any.required": "instructions is required field",
   }),
 });
 
