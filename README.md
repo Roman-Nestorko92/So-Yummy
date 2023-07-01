@@ -14,7 +14,7 @@ Before getting started with the project, make sure the following tools are insta
 
 ## Tools
 
-Proxima is built using the following tools:
+So-Yummy is built using the following tools:
 
 - [MongoDB](https://www.mongodb.com/)
 - [Express.js](https://expressjs.com/)
