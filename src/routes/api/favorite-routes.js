@@ -5,11 +5,17 @@ const {
   isValidId,
   isValidIdRecipe,
 } = require("../../middleWares");
+
 const favoriteList = require("../../controllers/favorite-controller");
 
-router.use(authentificate);
+router.patch(
+  "/:id",
+  authentificate,
+  isValidId,
+  isValidIdRecipe,
+  favoriteList.patchAddfavorite
+);
 
-router.patch("/:id", isValidId, isValidIdRecipe, favoriteList.patchAddfavorite);
-router.get("/", favoriteList.getAllfavorite);
+router.get("/", authentificate, favoriteList.getAllfavorite);
 
 module.exports = router;

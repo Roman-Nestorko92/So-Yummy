@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const authControllers = require("../../controllers/auth-controllers");
 const { schemas } = require("../../models/user");
 const { validateBody } = require("../../utils");
 const { authentificate, uploadAvatar, passport } = require("../../middleWares");
+
+const authControllers = require("../../controllers/auth-controllers");
 
 router.get(
   "/google",
@@ -39,4 +40,5 @@ router.patch(
   validateBody(schemas.userUpdateSchema),
   authControllers.updateUser
 );
+
 module.exports = router;

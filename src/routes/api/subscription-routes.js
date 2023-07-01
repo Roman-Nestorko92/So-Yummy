@@ -8,13 +8,8 @@ const { userEmailSchema } = require("../../models/subscription");
 const { validateBody } = require("../../utils");
 const { authentificate } = require("../../middleWares");
 
-router.post(
-  "/subscribe",
-  authentificate,
-  validateBody(userEmailSchema),
-  subscription
-);
+router.post("/", authentificate, validateBody(userEmailSchema), subscription);
 
-router.delete("/subscribe/:id", authentificate, unSubscribtion);
+router.delete("/:id", authentificate, unSubscribtion);
 
 module.exports = router;

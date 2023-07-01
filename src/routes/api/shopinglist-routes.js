@@ -3,16 +3,18 @@ const router = express.Router();
 const { validateBody } = require("../../utils");
 const { schemas } = require("../../models/user");
 const { authentificate } = require("../../middleWares");
-const shoppingList = require("../../controllers/shoppinglist-controller");
 
-router.use(authentificate);
+const shoppingList = require("../../controllers/shoppinglist-controller");
 
 router.post(
   "/",
+  authentificate,
   validateBody(schemas.userShoppingListSchema),
-  shoppingList.postAddProducts
+  shoppingList.addProducts
 );
-router.delete("/", shoppingList.deleteProducts);
-router.get("/", shoppingList.getAllProducts);
+
+router.delete("/", authentificate, shoppingList.deleteProducts);
+
+router.get("/", authentificate, shoppingList.getAllProducts);
 
 module.exports = router;

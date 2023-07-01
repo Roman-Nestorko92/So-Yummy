@@ -1,9 +1,10 @@
+const { ObjectId } = require("mongodb");
+const { User } = require("../models/user");
+
 const { ctrlWrapper } = require("../utils");
 const { HttpError } = require("../helpers");
-const { User } = require("../models/user");
-const { ObjectId } = require("mongodb");
 
-const postAddProducts = async (req, res) => {
+const addProducts = async (req, res) => {
   const { _id: userId } = req.user;
   const { _id, measure, ttl, thb } = req.body;
   if (!_id || !measure || !ttl || !thb) {
@@ -53,38 +54,34 @@ const getAllProducts = async (req, res) => {
     throw HttpError(400, "Invalid page or limit value");
   }
 
-  const [allData] = await User.aggregate([
-    {
-      $match: {
-        _id: _id,
-      },
-    },
-  ]);
-
-  const totalPages = Math.ceil(allData.shoppingList.length / limit);
-
-  const [data] = await User.aggregate([
+  const [result] = await User.aggregate([
     {
       $match: {
         _id: _id,
       },
     },
     {
-      $group: { _id: "$_id", shoppingList: { $first: "$shoppingList" } },
-    },
-    {
-      $skip: Number(skip),
-    },
-    {
-      $limit: Number(limit),
+      $project: {
+        totalPages: {
+          $ceil: {
+            $divide: [{ $size: "$shoppingList" }, Number(limit)],
+          },
+        },
+        data: {
+          $slice: ["$shoppingList", Number(skip), Number(limit)],
+        },
+      },
     },
   ]);
+
+  const totalPages = result.totalPages;
+  const data = result.data;
 
   res.json({ totalPages, data });
 };
 
 module.exports = {
-  postAddProducts: ctrlWrapper(postAddProducts),
+  addProducts: ctrlWrapper(addProducts),
   deleteProducts: ctrlWrapper(deleteProducts),
   getAllProducts: ctrlWrapper(getAllProducts),
 };

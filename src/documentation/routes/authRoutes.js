@@ -13,20 +13,6 @@ const authRoutes = {
       },
     },
   },
-  "/api/auth/google/callback": {
-    get: {
-      tags: ["Auth"],
-      summary: "User google redirection to front-end",
-      parameters: [],
-
-      responses: {
-        400: {
-          description: "Bad request ",
-        },
-        500: { description: "Server error" },
-      },
-    },
-  },
   "/api/auth/register": {
     post: {
       tags: ["Auth"],
