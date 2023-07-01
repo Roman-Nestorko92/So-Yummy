@@ -1,8 +1,9 @@
-const express = require("express")
-const router = express.Router()
-const { authentificate } = require("../../middleWares")
-const popularRecipeControllers = require("../../controllers/popularRecipe-controllers")
+const express = require("express");
+const router = express.Router();
+const { authentificate } = require("../../middleWares");
 
-router.get("/", authentificate, popularRecipeControllers.getPopularRecipes)
+const popularRecipeControllers = require("../../controllers/popularRecipe-controllers");
 
-module.exports = router
+router.get("/", authentificate, popularRecipeControllers.getPopularRecipes);
+
+module.exports = router;

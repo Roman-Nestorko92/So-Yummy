@@ -50,7 +50,6 @@ const getOwnRecipes = async (req, res) => {
 
   const skip = (page - 1) * limit;
   const allData = await OwnRecipe.find({ owner });
-
   const totalPages = Math.ceil(allData.length / limit);
 
   const data = await OwnRecipe.aggregate([

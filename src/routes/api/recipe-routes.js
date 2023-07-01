@@ -1,6 +1,4 @@
 const express = require("express");
-const controllers = require("../../controllers/recipe-controller");
-const categoryControllers = require("../../controllers/category-controllers");
 const {
   authentificate,
   isValidId,
@@ -8,6 +6,9 @@ const {
   isValidIdRecipe,
   optimizeRequest,
 } = require("../../middleWares");
+
+const controllers = require("../../controllers/recipe-controller");
+const categoryControllers = require("../../controllers/category-controllers");
 
 const router = express.Router();
 
