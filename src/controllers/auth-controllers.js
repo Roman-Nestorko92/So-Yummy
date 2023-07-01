@@ -1,12 +1,12 @@
-const { ctrlWrapper } = require("../utils");
-const { HttpError } = require("../helpers");
-const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
 
-const { cloudinary } = require("../utils");
+const { ctrlWrapper, cloudinary } = require("../utils");
+const { HttpError } = require("../helpers");
+const { User } = require("../models/user");
+
 const { SECRET_KEY, FRONTEND_URL } = process.env;
 
 const register = async (req, res) => {
@@ -127,9 +127,7 @@ const updateUser = async (req, res) => {
 const googleAuth = async (req, res) => {
   const { _id: id, name, email, avatarURL } = req.user;
 
-  const payload = {
-    id,
-  };
+  const payload = { id };
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "48h" });
   await User.findByIdAndUpdate(id, { token });

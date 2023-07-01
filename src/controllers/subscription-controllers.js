@@ -1,5 +1,4 @@
 const { isValidObjectId } = require("mongoose");
-
 const { ctrlWrapper } = require("../utils");
 const { HttpError } = require("../helpers");
 const createMessage = require("../helpers/emailTemplates/subscriptionEmail");

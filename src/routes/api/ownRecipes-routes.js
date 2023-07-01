@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const ownRecipesControllers = require("../../controllers/ownRecipes-controllers");
 const { ownRecipesAddSchema } = require("../../models/ownRecipe");
 const { validateBody } = require("../../utils");
+
+const ownRecipesControllers = require("../../controllers/ownRecipes-controllers");
 
 const {
   authentificate,
