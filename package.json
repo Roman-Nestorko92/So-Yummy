@@ -1,7 +1,7 @@
 {
-  "name": "homework-03",
+  "name": "so-yummy-back",
   "version": "1.0.0",
-  "description": "**Read in other languages: [Russian](README.md), [Ukrainian](README.ua.md).**",
+  "description": "**Back-end of team-progect so-yummy**",
   "engines": {
     "node": ">=16.x"
   },
